@@ -9,10 +9,6 @@ Breakout is a classic arcade game where the player controls a paddle at the bott
 - **Points**: Each block broken earns points. Try to clear all the blocks to advance to the next level.
 - **Lives**: The game starts with 3 lives. Losing all lives ends the game.
 
-## Features
-- Simple, fast-paced gameplay suitable for all ages.
-- Multiple levels of increasing difficulty.
-
 ## How to Play
 1. Launch the game.
 2. Use the arrow keys to move the paddle left and right.
