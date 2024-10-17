@@ -1,7 +1,7 @@
 
 ___Breakout Game___
 
-    __Description__
+    ___Description___
         Breakout is a classic arcade game where the player controls a paddle at the bottom of the screen to bounce a ball upwards and break blocks. The objective is to clear all the blocks from the screen without letting the ball fall into the void below the paddle. As the player progresses through levels, the game may increase in difficulty by speeding up the ball or introducing new challenges.
 
     __Gameplay__
