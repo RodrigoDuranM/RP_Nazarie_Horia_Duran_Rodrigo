@@ -159,6 +159,9 @@ class GameNode:
 
     def game_loop(self):
         running = True
+        welcome_print = 0
+        game_print = 0
+        end_print = 0
         while running:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -166,17 +169,23 @@ class GameNode:
 
             # Welcome Phase
             if self.game_state == "welcome":
-                rospy.loginfo("Welcome phase started")
+                if welcome_print == 0:
+                    rospy.loginfo("Welcome phase started")
+                    welcome_print = 1
                 self.welcome_phase()
 
             # Playing Phase
             elif self.game_state == "playing":
-                rospy.loginfo("Playing phase started")
+                if game_print == 0:
+                    rospy.loginfo("Playing phase started")
+                    game_print = 1
                 self.game_phase()
 
             # Game Over Phase
             elif self.game_state == "game_over" and not self.score_sent:
-                rospy.loginfo("Game over phase started")
+                if end_print == 0:
+                    rospy.loginfo("Game over phase started")
+                    end_print = 1
                 self.final_phase()
 
             pygame.display.flip()
