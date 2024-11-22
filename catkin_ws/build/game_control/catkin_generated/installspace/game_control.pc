@@ -1,4 +1,4 @@
-prefix=/home/rdur5926/catkin_ws/install
+prefix=/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/install
 
 Name: game_control
 Description: Description of game_control

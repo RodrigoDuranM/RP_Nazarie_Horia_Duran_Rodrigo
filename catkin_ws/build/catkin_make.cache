@@ -1,2 +1,2 @@
 game_control
--DCATKIN_DEVEL_PREFIX=/home/rdur5926/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/home/rdur5926/catkin_ws/install -G Unix Makefiles
+-DCATKIN_DEVEL_PREFIX=/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/install -G Unix Makefiles

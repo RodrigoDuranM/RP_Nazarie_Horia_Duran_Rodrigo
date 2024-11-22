@@ -67,14 +67,14 @@ set(game_control_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("FALSE" STREQUAL "TRUE")
-  set(game_control_SOURCE_PREFIX /home/rdur5926/catkin_ws/src/game_control)
-  set(game_control_DEVEL_PREFIX /home/rdur5926/catkin_ws/devel)
+  set(game_control_SOURCE_PREFIX /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control)
+  set(game_control_DEVEL_PREFIX /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel)
   set(game_control_INSTALL_PREFIX "")
   set(game_control_PREFIX ${game_control_DEVEL_PREFIX})
 else()
   set(game_control_SOURCE_PREFIX "")
   set(game_control_DEVEL_PREFIX "")
-  set(game_control_INSTALL_PREFIX /home/rdur5926/catkin_ws/install)
+  set(game_control_INSTALL_PREFIX /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/install)
   set(game_control_PREFIX ${game_control_INSTALL_PREFIX})
 endif()
 
@@ -154,7 +154,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/rdur5926/catkin_ws/install/lib;/home/rdur5926/catkin_ws/devel/lib;/opt/ros/noetic/lib)
+    foreach(path /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/install/lib;/opt/ros/noetic/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
