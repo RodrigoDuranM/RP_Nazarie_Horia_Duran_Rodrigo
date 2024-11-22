@@ -62,8 +62,9 @@ class GameNode:
     def keyboard_callback(self, msg):
         # Handle movement commands or start command
         if msg.data == "START" and self.game_state == "welcome":
-            self.game_state = "playing"
+            self.game_state = "playing"  # Transition to playing phase
             self.reset_ball()
+            rospy.loginfo("Game started!")
         elif msg.data == "LEFT" and self.game_state == "playing":
             self.move_left()
         elif msg.data == "RIGHT" and self.game_state == "playing":
@@ -93,7 +94,7 @@ class GameNode:
         self.screen.fill((0, 0, 0))
         self.draw_text(f"Welcome {self.user_name}!", (255, 255, 255), self.WIDTH // 2, self.HEIGHT // 2 - 50)
         self.draw_text("Press 'START' to begin the game", (255, 255, 255), self.WIDTH // 2, self.HEIGHT // 2 + 50)
-        
+
     def game_phase(self):
         self.screen.fill((0, 0, 0))
         self.draw_text(f"Score: {self.score}", (255, 255, 255), 70, 20)
