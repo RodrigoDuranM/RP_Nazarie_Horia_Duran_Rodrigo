@@ -89,6 +89,73 @@ class GameNode:
         text_rect.center = (x, y)
         self.screen.blit(text_surface, text_rect)
 
+    def welcome_phase(self):
+        self.screen.fill((0, 0, 0))
+        self.draw_text(f"Welcome {self.user_name}!", (255, 255, 255), self.WIDTH // 2, self.HEIGHT // 2 - 50)
+        self.draw_text("Press 'START' to begin the game", (255, 255, 255), self.WIDTH // 2, self.HEIGHT // 2 + 50)
+        
+    def game_phase(self):
+        self.screen.fill((0, 0, 0))
+        self.draw_text(f"Score: {self.score}", (255, 255, 255), 70, 20)
+        self.draw_text(f"Lives: {self.lives}", (255, 255, 255), self.WIDTH - 70, 20)
+        self.draw_text(f"Level: {self.level}", (255, 255, 255), self.WIDTH // 2, 20)
+
+        pygame.draw.rect(self.screen, (128, 0, 128), self.player)
+        pygame.draw.ellipse(self.screen, (255, 255, 255), self.ball)
+        for brick in self.bricks:
+            pygame.draw.rect(self.screen, (255, 0, 0), brick)
+
+        # Move the ball
+        self.ball.x += self.ball_speed_x
+        self.ball.y += self.ball_speed_y
+
+        # Ball collision with walls
+        if self.ball.left <= 0 or self.ball.right >= self.WIDTH:
+            self.ball_speed_x = -self.ball_speed_x
+        if self.ball.top <= 0:
+            self.ball_speed_y = -self.ball_speed_y
+
+        # Ball collision with player
+        if self.ball.colliderect(self.player):
+            self.ball_speed_y = -self.ball_speed_y
+            self.ball_speed_x += random.uniform(-0.5, 0.5)
+
+        # Ball collision with bricks
+        for brick in self.bricks[:]:
+            if self.ball.colliderect(brick):
+                self.bricks.remove(brick)
+                self.ball_speed_y = -self.ball_speed_y
+                self.score += 10
+
+        # Ball out of bounds
+        if self.ball.bottom >= self.HEIGHT:
+            self.lives -= 1
+            if self.lives > 0:
+                self.reset_ball()
+            else:
+                self.game_state = "game_over"
+
+        # Level complete
+        if len(self.bricks) == 0:
+            self.level += 1
+            self.ball_speed_x *= 1.2
+            self.ball_speed_y *= 1.2
+            self.PLAYER_SPEED += 1
+            self.reset_ball()
+            self.bricks = []
+            for row in range(5):
+                for col in range(self.WIDTH // self.BRICK_WIDTH):
+                    brick = pygame.Rect(col * self.BRICK_WIDTH, row * self.BRICK_HEIGHT + 50, self.BRICK_WIDTH - 2, self.BRICK_HEIGHT - 2)
+                    self.bricks.append(brick)
+
+    def final_phase(self):
+        self.screen.fill((0, 0, 0))
+        self.draw_text(f"Game Over! Final Score: {self.score}", (255, 255, 255), self.WIDTH // 2, self.HEIGHT // 2)
+
+        # Publish final score to result_information
+        self.result_pub.publish(self.score)
+        self.score_sent = True
+
     def game_loop(self):
         running = True
         while running:
@@ -98,73 +165,15 @@ class GameNode:
 
             # Welcome Phase
             if self.game_state == "welcome":
-                self.screen.fill((0, 0, 0))
-                self.draw_text(f"Welcome {self.user_name}!", (255, 255, 255), self.WIDTH // 2, self.HEIGHT // 2 - 50)
-                self.draw_text("Press 'START' to begin the game", (255, 255, 255), self.WIDTH // 2, self.HEIGHT // 2 + 50)
+                self.welcome_phase()
 
             # Playing Phase
             elif self.game_state == "playing":
-                self.screen.fill((0, 0, 0))
-                self.draw_text(f"Score: {self.score}", (255, 255, 255), 70, 20)
-                self.draw_text(f"Lives: {self.lives}", (255, 255, 255), self.WIDTH - 70, 20)
-                self.draw_text(f"Level: {self.level}", (255, 255, 255), self.WIDTH // 2, 20)
-
-                pygame.draw.rect(self.screen, (128, 0, 128), self.player)
-                pygame.draw.ellipse(self.screen, (255, 255, 255), self.ball)
-                for brick in self.bricks:
-                    pygame.draw.rect(self.screen, (255, 0, 0), brick)
-
-                # Move the ball
-                self.ball.x += self.ball_speed_x
-                self.ball.y += self.ball_speed_y
-
-                # Ball collision with walls
-                if self.ball.left <= 0 or self.ball.right >= self.WIDTH:
-                    self.ball_speed_x = -self.ball_speed_x
-                if self.ball.top <= 0:
-                    self.ball_speed_y = -self.ball_speed_y
-
-                # Ball collision with player
-                if self.ball.colliderect(self.player):
-                    self.ball_speed_y = -self.ball_speed_y
-                    self.ball_speed_x += random.uniform(-0.5, 0.5)
-
-                # Ball collision with bricks
-                for brick in self.bricks[:]:
-                    if self.ball.colliderect(brick):
-                        self.bricks.remove(brick)
-                        self.ball_speed_y = -self.ball_speed_y
-                        self.score += 10
-
-                # Ball out of bounds
-                if self.ball.bottom >= self.HEIGHT:
-                    self.lives -= 1
-                    if self.lives > 0:
-                        self.reset_ball()
-                    else:
-                        self.game_state = "game_over"
-
-                # Level complete
-                if len(self.bricks) == 0:
-                    self.level += 1
-                    self.ball_speed_x *= 1.2
-                    self.ball_speed_y *= 1.2
-                    self.PLAYER_SPEED += 1
-                    self.reset_ball()
-                    self.bricks = []
-                    for row in range(5):
-                        for col in range(self.WIDTH // self.BRICK_WIDTH):
-                            brick = pygame.Rect(col * self.BRICK_WIDTH, row * self.BRICK_HEIGHT + 50, self.BRICK_WIDTH - 2, self.BRICK_HEIGHT - 2)
-                            self.bricks.append(brick)
+                self.game_phase()
 
             # Game Over Phase
             elif self.game_state == "game_over" and not self.score_sent:
-                self.screen.fill((0, 0, 0))
-                self.draw_text(f"Game Over! Final Score: {self.score}", (255, 255, 255), self.WIDTH // 2, self.HEIGHT // 2)
-
-                # Publish final score to result_information
-                self.result_pub.publish(self.score)
-                self.score_sent = True
+                self.final_phase()
 
             pygame.display.flip()
             self.clock.tick(60)
