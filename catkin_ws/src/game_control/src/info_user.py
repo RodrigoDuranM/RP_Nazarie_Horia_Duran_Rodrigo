@@ -5,6 +5,7 @@ from game_control.msg import user_msg
 
 class InfoUser:
     def __init__(self):
+        rospy.init_node('info_user')
         self.pub = rospy.Publisher('user_information', user_msg, queue_size=10)
         self.user = user_msg()
 
@@ -15,19 +16,18 @@ class InfoUser:
 
     def publish_user_info(self):
         rospy.loginfo(f"Publishing user information: {self.user}")
-        rate = rospy.Rate(1)  # 1 Hz
+        rate = rospy.Rate(1)  # 1 Hz rate (one iteration per second)
         self.pub.publish(self.user)
         while not rospy.is_shutdown():
-            rate.sleep() # Will sleep for one second and check if there was a shutdown
+            rate.sleep()  # Sleep for 1 second and check if there's a shutdown
 
-def main():
-    rospy.init_node('info_user')
-    info_user = InfoUser()
-    info_user.collect_user_info()
-    info_user.publish_user_info()
+    def run(self):
+        self.collect_user_info()
+        self.publish_user_info()
 
 if __name__ == "__main__":
     try:
-        main()
+        info_user = InfoUser()
+        info_user.run()
     except rospy.ROSInterruptException:
         pass
