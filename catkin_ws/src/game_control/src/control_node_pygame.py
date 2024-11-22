@@ -15,7 +15,7 @@ class ControlNodePygame:
         screen = pygame.display.set_mode((400, 300))
         pygame.display.set_caption("Control Node (Pygame)")
 
-        rospy.loginfo("Control node using pygame ready. Use arrow keys or S to control the game.")
+        rospy.loginfo("Control node using pygame ready. Use arrow keys to move or 's' to start the game.")
 
         running = True
         while not rospy.is_shutdown() and running:
@@ -23,7 +23,7 @@ class ControlNodePygame:
                 if event.type == pygame.QUIT:
                     running = False
 
-            # Continuously check if the arrow keys are being held down
+            # Continuously check if the arrow keys are being held down. This allows for better movement of the board.
             keys = pygame.key.get_pressed()
 
             if keys[pygame.K_LEFT]:

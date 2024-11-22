@@ -18,7 +18,7 @@ class InfoUser:
         rate = rospy.Rate(1)  # 1 Hz
         self.pub.publish(self.user)
         while not rospy.is_shutdown():
-            rate.sleep()
+            rate.sleep() # Will sleep for one second and check if there was a shutdown
 
 def main():
     rospy.init_node('info_user')

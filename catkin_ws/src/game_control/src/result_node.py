@@ -16,7 +16,6 @@ class ResultNode:
         rospy.loginfo(f"Final Score: {data.data}")
 
     def user_info_callback(self, data):
-        # Print user information received from the 'user_information' topic
         rospy.loginfo(f"User Information - Name: {data.name}, Username: {data.username}, Age: {data.age}")
 
 if __name__ == "__main__":
