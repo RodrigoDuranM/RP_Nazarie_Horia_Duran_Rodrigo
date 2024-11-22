@@ -3,20 +3,23 @@
 import rospy
 from std_msgs.msg import String
 
-def main():
-    rospy.init_node('control_node')
-    pub = rospy.Publisher('keyboard_control', String, queue_size=10)
+class ControlNode:
+    def __init__(self):
+        rospy.init_node('control_node')
+        self.pub = rospy.Publisher('keyboard_control', String, queue_size=10)
+        self.run()
 
-    rospy.loginfo("Control node ready. Type LEFT, RIGHT, or START to control the game.")
-    while not rospy.is_shutdown():
-        command = input("Enter command: ").strip().upper()
-        if command in ["LEFT", "RIGHT", "START"]:
-            pub.publish(command)
-        else:
-            rospy.logwarn("Invalid command. Use LEFT, RIGHT, or START.")
+    def run(self):
+        rospy.loginfo("Control node ready. Type LEFT, RIGHT, or START to control the game.")
+        while not rospy.is_shutdown():
+            command = input("Enter command: ").strip().upper()
+            if command in ["LEFT", "RIGHT", "START"]:
+                self.pub.publish(command)
+            else:
+                rospy.logwarn("Invalid command. Use LEFT, RIGHT, or START.")
 
 if __name__ == "__main__":
     try:
-        main()
+        ControlNode()
     except rospy.ROSInterruptException:
         pass

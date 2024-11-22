@@ -1,20 +1,26 @@
 #!/usr/bin/env python3
 
 import rospy
+from game_control.msg import user_msg
 from std_msgs.msg import Int64
 
-def callback(data):
-    rospy.loginfo(f"Final Score: {data.data}")
+class ResultNode:
+    def __init__(self):
+        rospy.init_node('result_game')
+        rospy.Subscriber('result_information', Int64, self.callback)
+        rospy.Subscriber('user_information', user_msg, self.user_info_callback)
+        rospy.loginfo("Result node ready to receive final scores and user information.")
+        rospy.spin()
 
-def main():
-    rospy.init_node('result_game')
-    rospy.Subscriber('result_information', Int64, callback)
+    def callback(self, data):
+        rospy.loginfo(f"Final Score: {data.data}")
 
-    rospy.loginfo("Result node ready to receive final scores.")
-    rospy.spin()
+    def user_info_callback(self, data):
+        # Print user information received from the 'user_information' topic
+        rospy.loginfo(f"User Information - Name: {data.name}, Username: {data.username}, Age: {data.age}")
 
 if __name__ == "__main__":
     try:
-        main()
+        ResultNode()
     except rospy.ROSInterruptException:
         pass
