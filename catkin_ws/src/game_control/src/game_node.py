@@ -165,14 +165,17 @@ class GameNode:
 
             # Welcome Phase
             if self.game_state == "welcome":
+                rospy.loginfo("Welcome phase started")
                 self.welcome_phase()
 
             # Playing Phase
             elif self.game_state == "playing":
+                rospy.loginfo("Playing phase started")
                 self.game_phase()
 
             # Game Over Phase
             elif self.game_state == "game_over" and not self.score_sent:
+                rospy.loginfo("Game over phase started")
                 self.final_phase()
 
             pygame.display.flip()
