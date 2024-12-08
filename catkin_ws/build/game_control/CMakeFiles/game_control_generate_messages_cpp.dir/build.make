@@ -54,6 +54,8 @@ CMAKE_BINARY_DIR = /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/build
 include game_control/CMakeFiles/game_control_generate_messages_cpp.dir/progress.make
 
 game_control/CMakeFiles/game_control_generate_messages_cpp: /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/include/game_control/user_msg.h
+game_control/CMakeFiles/game_control_generate_messages_cpp: /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/include/game_control/GetUserScore.h
+game_control/CMakeFiles/game_control_generate_messages_cpp: /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/include/game_control/SetGameDifficulty.h
 
 
 /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/include/game_control/user_msg.h: /opt/ros/noetic/lib/gencpp/gen_cpp.py
@@ -62,8 +64,24 @@ game_control/CMakeFiles/game_control_generate_messages_cpp: /home/rdur5926/RP_Na
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating C++ code from game_control/user_msg.msg"
 	cd /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control && /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/build/catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/msg/user_msg.msg -Igame_control:/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p game_control -o /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/include/game_control -e /opt/ros/noetic/share/gencpp/cmake/..
 
+/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/include/game_control/GetUserScore.h: /opt/ros/noetic/lib/gencpp/gen_cpp.py
+/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/include/game_control/GetUserScore.h: /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/srv/GetUserScore.srv
+/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/include/game_control/GetUserScore.h: /opt/ros/noetic/share/gencpp/msg.h.template
+/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/include/game_control/GetUserScore.h: /opt/ros/noetic/share/gencpp/srv.h.template
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating C++ code from game_control/GetUserScore.srv"
+	cd /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control && /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/build/catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/srv/GetUserScore.srv -Igame_control:/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p game_control -o /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/include/game_control -e /opt/ros/noetic/share/gencpp/cmake/..
+
+/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/include/game_control/SetGameDifficulty.h: /opt/ros/noetic/lib/gencpp/gen_cpp.py
+/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/include/game_control/SetGameDifficulty.h: /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/srv/SetGameDifficulty.srv
+/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/include/game_control/SetGameDifficulty.h: /opt/ros/noetic/share/gencpp/msg.h.template
+/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/include/game_control/SetGameDifficulty.h: /opt/ros/noetic/share/gencpp/srv.h.template
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating C++ code from game_control/SetGameDifficulty.srv"
+	cd /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control && /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/build/catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/srv/SetGameDifficulty.srv -Igame_control:/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p game_control -o /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/include/game_control -e /opt/ros/noetic/share/gencpp/cmake/..
+
 game_control_generate_messages_cpp: game_control/CMakeFiles/game_control_generate_messages_cpp
 game_control_generate_messages_cpp: /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/include/game_control/user_msg.h
+game_control_generate_messages_cpp: /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/include/game_control/GetUserScore.h
+game_control_generate_messages_cpp: /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/include/game_control/SetGameDifficulty.h
 game_control_generate_messages_cpp: game_control/CMakeFiles/game_control_generate_messages_cpp.dir/build.make
 
 .PHONY : game_control_generate_messages_cpp

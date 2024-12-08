@@ -54,7 +54,10 @@ CMAKE_BINARY_DIR = /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/build
 include game_control/CMakeFiles/game_control_generate_messages_py.dir/progress.make
 
 game_control/CMakeFiles/game_control_generate_messages_py: /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/lib/python3/dist-packages/game_control/msg/_user_msg.py
+game_control/CMakeFiles/game_control_generate_messages_py: /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/lib/python3/dist-packages/game_control/srv/_GetUserScore.py
+game_control/CMakeFiles/game_control_generate_messages_py: /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/lib/python3/dist-packages/game_control/srv/_SetGameDifficulty.py
 game_control/CMakeFiles/game_control_generate_messages_py: /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/lib/python3/dist-packages/game_control/msg/__init__.py
+game_control/CMakeFiles/game_control_generate_messages_py: /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/lib/python3/dist-packages/game_control/srv/__init__.py
 
 
 /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/lib/python3/dist-packages/game_control/msg/_user_msg.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
@@ -62,14 +65,36 @@ game_control/CMakeFiles/game_control_generate_messages_py: /home/rdur5926/RP_Naz
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Python from MSG game_control/user_msg"
 	cd /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/build/game_control && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/msg/user_msg.msg -Igame_control:/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p game_control -o /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/lib/python3/dist-packages/game_control/msg
 
+/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/lib/python3/dist-packages/game_control/srv/_GetUserScore.py: /opt/ros/noetic/lib/genpy/gensrv_py.py
+/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/lib/python3/dist-packages/game_control/srv/_GetUserScore.py: /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/srv/GetUserScore.srv
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Python code from SRV game_control/GetUserScore"
+	cd /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/build/game_control && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/gensrv_py.py /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/srv/GetUserScore.srv -Igame_control:/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p game_control -o /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/lib/python3/dist-packages/game_control/srv
+
+/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/lib/python3/dist-packages/game_control/srv/_SetGameDifficulty.py: /opt/ros/noetic/lib/genpy/gensrv_py.py
+/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/lib/python3/dist-packages/game_control/srv/_SetGameDifficulty.py: /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/srv/SetGameDifficulty.srv
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating Python code from SRV game_control/SetGameDifficulty"
+	cd /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/build/game_control && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/gensrv_py.py /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/srv/SetGameDifficulty.srv -Igame_control:/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p game_control -o /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/lib/python3/dist-packages/game_control/srv
+
 /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/lib/python3/dist-packages/game_control/msg/__init__.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
 /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/lib/python3/dist-packages/game_control/msg/__init__.py: /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/lib/python3/dist-packages/game_control/msg/_user_msg.py
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Python msg __init__.py for game_control"
+/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/lib/python3/dist-packages/game_control/msg/__init__.py: /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/lib/python3/dist-packages/game_control/srv/_GetUserScore.py
+/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/lib/python3/dist-packages/game_control/msg/__init__.py: /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/lib/python3/dist-packages/game_control/srv/_SetGameDifficulty.py
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating Python msg __init__.py for game_control"
 	cd /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/build/game_control && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py -o /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/lib/python3/dist-packages/game_control/msg --initpy
+
+/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/lib/python3/dist-packages/game_control/srv/__init__.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
+/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/lib/python3/dist-packages/game_control/srv/__init__.py: /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/lib/python3/dist-packages/game_control/msg/_user_msg.py
+/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/lib/python3/dist-packages/game_control/srv/__init__.py: /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/lib/python3/dist-packages/game_control/srv/_GetUserScore.py
+/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/lib/python3/dist-packages/game_control/srv/__init__.py: /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/lib/python3/dist-packages/game_control/srv/_SetGameDifficulty.py
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Generating Python srv __init__.py for game_control"
+	cd /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/build/game_control && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py -o /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/lib/python3/dist-packages/game_control/srv --initpy
 
 game_control_generate_messages_py: game_control/CMakeFiles/game_control_generate_messages_py
 game_control_generate_messages_py: /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/lib/python3/dist-packages/game_control/msg/_user_msg.py
+game_control_generate_messages_py: /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/lib/python3/dist-packages/game_control/srv/_GetUserScore.py
+game_control_generate_messages_py: /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/lib/python3/dist-packages/game_control/srv/_SetGameDifficulty.py
 game_control_generate_messages_py: /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/lib/python3/dist-packages/game_control/msg/__init__.py
+game_control_generate_messages_py: /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/lib/python3/dist-packages/game_control/srv/__init__.py
 game_control_generate_messages_py: game_control/CMakeFiles/game_control_generate_messages_py.dir/build.make
 
 .PHONY : game_control_generate_messages_py

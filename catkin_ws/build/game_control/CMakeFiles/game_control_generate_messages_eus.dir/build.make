@@ -54,6 +54,8 @@ CMAKE_BINARY_DIR = /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/build
 include game_control/CMakeFiles/game_control_generate_messages_eus.dir/progress.make
 
 game_control/CMakeFiles/game_control_generate_messages_eus: /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/share/roseus/ros/game_control/msg/user_msg.l
+game_control/CMakeFiles/game_control_generate_messages_eus: /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/share/roseus/ros/game_control/srv/GetUserScore.l
+game_control/CMakeFiles/game_control_generate_messages_eus: /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/share/roseus/ros/game_control/srv/SetGameDifficulty.l
 game_control/CMakeFiles/game_control_generate_messages_eus: /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/share/roseus/ros/game_control/manifest.l
 
 
@@ -62,12 +64,24 @@ game_control/CMakeFiles/game_control_generate_messages_eus: /home/rdur5926/RP_Na
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating EusLisp code from game_control/user_msg.msg"
 	cd /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/build/game_control && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/msg/user_msg.msg -Igame_control:/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p game_control -o /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/share/roseus/ros/game_control/msg
 
+/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/share/roseus/ros/game_control/srv/GetUserScore.l: /opt/ros/noetic/lib/geneus/gen_eus.py
+/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/share/roseus/ros/game_control/srv/GetUserScore.l: /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/srv/GetUserScore.srv
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating EusLisp code from game_control/GetUserScore.srv"
+	cd /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/build/game_control && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/srv/GetUserScore.srv -Igame_control:/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p game_control -o /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/share/roseus/ros/game_control/srv
+
+/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/share/roseus/ros/game_control/srv/SetGameDifficulty.l: /opt/ros/noetic/lib/geneus/gen_eus.py
+/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/share/roseus/ros/game_control/srv/SetGameDifficulty.l: /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/srv/SetGameDifficulty.srv
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating EusLisp code from game_control/SetGameDifficulty.srv"
+	cd /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/build/game_control && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/srv/SetGameDifficulty.srv -Igame_control:/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p game_control -o /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/share/roseus/ros/game_control/srv
+
 /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/share/roseus/ros/game_control/manifest.l: /opt/ros/noetic/lib/geneus/gen_eus.py
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating EusLisp manifest code for game_control"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating EusLisp manifest code for game_control"
 	cd /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/build/game_control && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py -m -o /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/share/roseus/ros/game_control game_control std_msgs
 
 game_control_generate_messages_eus: game_control/CMakeFiles/game_control_generate_messages_eus
 game_control_generate_messages_eus: /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/share/roseus/ros/game_control/msg/user_msg.l
+game_control_generate_messages_eus: /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/share/roseus/ros/game_control/srv/GetUserScore.l
+game_control_generate_messages_eus: /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/share/roseus/ros/game_control/srv/SetGameDifficulty.l
 game_control_generate_messages_eus: /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/share/roseus/ros/game_control/manifest.l
 game_control_generate_messages_eus: game_control/CMakeFiles/game_control_generate_messages_eus.dir/build.make
 

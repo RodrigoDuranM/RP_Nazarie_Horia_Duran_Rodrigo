@@ -42,6 +42,13 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/game_control/srv" TYPE FILE FILES
+    "/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/srv/GetUserScore.srv"
+    "/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/srv/SetGameDifficulty.srv"
+    )
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/game_control/cmake" TYPE FILE FILES "/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/build/game_control/catkin_generated/installspace/game_control-msg-paths.cmake")
 endif()
 

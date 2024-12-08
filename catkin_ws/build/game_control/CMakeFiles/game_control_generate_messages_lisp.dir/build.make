@@ -54,6 +54,8 @@ CMAKE_BINARY_DIR = /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/build
 include game_control/CMakeFiles/game_control_generate_messages_lisp.dir/progress.make
 
 game_control/CMakeFiles/game_control_generate_messages_lisp: /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/share/common-lisp/ros/game_control/msg/user_msg.lisp
+game_control/CMakeFiles/game_control_generate_messages_lisp: /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/share/common-lisp/ros/game_control/srv/GetUserScore.lisp
+game_control/CMakeFiles/game_control_generate_messages_lisp: /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/share/common-lisp/ros/game_control/srv/SetGameDifficulty.lisp
 
 
 /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/share/common-lisp/ros/game_control/msg/user_msg.lisp: /opt/ros/noetic/lib/genlisp/gen_lisp.py
@@ -61,8 +63,20 @@ game_control/CMakeFiles/game_control_generate_messages_lisp: /home/rdur5926/RP_N
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Lisp code from game_control/user_msg.msg"
 	cd /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/build/game_control && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/msg/user_msg.msg -Igame_control:/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p game_control -o /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/share/common-lisp/ros/game_control/msg
 
+/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/share/common-lisp/ros/game_control/srv/GetUserScore.lisp: /opt/ros/noetic/lib/genlisp/gen_lisp.py
+/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/share/common-lisp/ros/game_control/srv/GetUserScore.lisp: /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/srv/GetUserScore.srv
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Lisp code from game_control/GetUserScore.srv"
+	cd /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/build/game_control && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/srv/GetUserScore.srv -Igame_control:/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p game_control -o /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/share/common-lisp/ros/game_control/srv
+
+/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/share/common-lisp/ros/game_control/srv/SetGameDifficulty.lisp: /opt/ros/noetic/lib/genlisp/gen_lisp.py
+/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/share/common-lisp/ros/game_control/srv/SetGameDifficulty.lisp: /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/srv/SetGameDifficulty.srv
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating Lisp code from game_control/SetGameDifficulty.srv"
+	cd /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/build/game_control && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/srv/SetGameDifficulty.srv -Igame_control:/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p game_control -o /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/share/common-lisp/ros/game_control/srv
+
 game_control_generate_messages_lisp: game_control/CMakeFiles/game_control_generate_messages_lisp
 game_control_generate_messages_lisp: /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/share/common-lisp/ros/game_control/msg/user_msg.lisp
+game_control_generate_messages_lisp: /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/share/common-lisp/ros/game_control/srv/GetUserScore.lisp
+game_control_generate_messages_lisp: /home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/devel/share/common-lisp/ros/game_control/srv/SetGameDifficulty.lisp
 game_control_generate_messages_lisp: game_control/CMakeFiles/game_control_generate_messages_lisp.dir/build.make
 
 .PHONY : game_control_generate_messages_lisp

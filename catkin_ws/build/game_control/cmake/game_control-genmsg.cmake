@@ -1,6 +1,6 @@
 # generated from genmsg/cmake/pkg-genmsg.cmake.em
 
-message(STATUS "game_control: 1 messages, 0 services")
+message(STATUS "game_control: 1 messages, 2 services")
 
 set(MSG_I_FLAGS "-Igame_control:/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/msg;-Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg")
 
@@ -22,6 +22,16 @@ add_custom_target(_game_control_generate_messages_check_deps_${_filename}
   COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "game_control" "/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/msg/user_msg.msg" ""
 )
 
+get_filename_component(_filename "/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/srv/GetUserScore.srv" NAME_WE)
+add_custom_target(_game_control_generate_messages_check_deps_${_filename}
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "game_control" "/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/srv/GetUserScore.srv" ""
+)
+
+get_filename_component(_filename "/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/srv/SetGameDifficulty.srv" NAME_WE)
+add_custom_target(_game_control_generate_messages_check_deps_${_filename}
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "game_control" "/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/srv/SetGameDifficulty.srv" ""
+)
+
 #
 #  langs = gencpp;geneus;genlisp;gennodejs;genpy
 #
@@ -36,6 +46,18 @@ _generate_msg_cpp(game_control
 )
 
 ### Generating Services
+_generate_srv_cpp(game_control
+  "/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/srv/GetUserScore.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/game_control
+)
+_generate_srv_cpp(game_control
+  "/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/srv/SetGameDifficulty.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/game_control
+)
 
 ### Generating Module File
 _generate_module_cpp(game_control
@@ -50,6 +72,10 @@ add_dependencies(game_control_generate_messages game_control_generate_messages_c
 
 # add dependencies to all check dependencies targets
 get_filename_component(_filename "/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/msg/user_msg.msg" NAME_WE)
+add_dependencies(game_control_generate_messages_cpp _game_control_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/srv/GetUserScore.srv" NAME_WE)
+add_dependencies(game_control_generate_messages_cpp _game_control_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/srv/SetGameDifficulty.srv" NAME_WE)
 add_dependencies(game_control_generate_messages_cpp _game_control_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -69,6 +95,18 @@ _generate_msg_eus(game_control
 )
 
 ### Generating Services
+_generate_srv_eus(game_control
+  "/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/srv/GetUserScore.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/game_control
+)
+_generate_srv_eus(game_control
+  "/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/srv/SetGameDifficulty.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/game_control
+)
 
 ### Generating Module File
 _generate_module_eus(game_control
@@ -83,6 +121,10 @@ add_dependencies(game_control_generate_messages game_control_generate_messages_e
 
 # add dependencies to all check dependencies targets
 get_filename_component(_filename "/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/msg/user_msg.msg" NAME_WE)
+add_dependencies(game_control_generate_messages_eus _game_control_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/srv/GetUserScore.srv" NAME_WE)
+add_dependencies(game_control_generate_messages_eus _game_control_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/srv/SetGameDifficulty.srv" NAME_WE)
 add_dependencies(game_control_generate_messages_eus _game_control_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -102,6 +144,18 @@ _generate_msg_lisp(game_control
 )
 
 ### Generating Services
+_generate_srv_lisp(game_control
+  "/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/srv/GetUserScore.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/game_control
+)
+_generate_srv_lisp(game_control
+  "/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/srv/SetGameDifficulty.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/game_control
+)
 
 ### Generating Module File
 _generate_module_lisp(game_control
@@ -116,6 +170,10 @@ add_dependencies(game_control_generate_messages game_control_generate_messages_l
 
 # add dependencies to all check dependencies targets
 get_filename_component(_filename "/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/msg/user_msg.msg" NAME_WE)
+add_dependencies(game_control_generate_messages_lisp _game_control_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/srv/GetUserScore.srv" NAME_WE)
+add_dependencies(game_control_generate_messages_lisp _game_control_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/srv/SetGameDifficulty.srv" NAME_WE)
 add_dependencies(game_control_generate_messages_lisp _game_control_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -135,6 +193,18 @@ _generate_msg_nodejs(game_control
 )
 
 ### Generating Services
+_generate_srv_nodejs(game_control
+  "/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/srv/GetUserScore.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/game_control
+)
+_generate_srv_nodejs(game_control
+  "/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/srv/SetGameDifficulty.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/game_control
+)
 
 ### Generating Module File
 _generate_module_nodejs(game_control
@@ -149,6 +219,10 @@ add_dependencies(game_control_generate_messages game_control_generate_messages_n
 
 # add dependencies to all check dependencies targets
 get_filename_component(_filename "/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/msg/user_msg.msg" NAME_WE)
+add_dependencies(game_control_generate_messages_nodejs _game_control_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/srv/GetUserScore.srv" NAME_WE)
+add_dependencies(game_control_generate_messages_nodejs _game_control_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/srv/SetGameDifficulty.srv" NAME_WE)
 add_dependencies(game_control_generate_messages_nodejs _game_control_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -168,6 +242,18 @@ _generate_msg_py(game_control
 )
 
 ### Generating Services
+_generate_srv_py(game_control
+  "/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/srv/GetUserScore.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/game_control
+)
+_generate_srv_py(game_control
+  "/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/srv/SetGameDifficulty.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/game_control
+)
 
 ### Generating Module File
 _generate_module_py(game_control
@@ -182,6 +268,10 @@ add_dependencies(game_control_generate_messages game_control_generate_messages_p
 
 # add dependencies to all check dependencies targets
 get_filename_component(_filename "/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/msg/user_msg.msg" NAME_WE)
+add_dependencies(game_control_generate_messages_py _game_control_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/srv/GetUserScore.srv" NAME_WE)
+add_dependencies(game_control_generate_messages_py _game_control_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/rdur5926/RP_Nazarie_Horia_Duran_Rodrigo/catkin_ws/src/game_control/srv/SetGameDifficulty.srv" NAME_WE)
 add_dependencies(game_control_generate_messages_py _game_control_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility

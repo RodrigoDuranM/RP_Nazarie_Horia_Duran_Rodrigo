@@ -298,19 +298,6 @@ game_control_genpy/fast:
 .PHONY : game_control_genpy/fast
 
 #=============================================================================
-# Target rules for targets named game_control_gennodejs
-
-# Build rule for target.
-game_control_gennodejs: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 game_control_gennodejs
-.PHONY : game_control_gennodejs
-
-# fast build rule for target.
-game_control_gennodejs/fast:
-	$(MAKE) -f game_control/CMakeFiles/game_control_gennodejs.dir/build.make game_control/CMakeFiles/game_control_gennodejs.dir/build
-.PHONY : game_control_gennodejs/fast
-
-#=============================================================================
 # Target rules for targets named game_control_generate_messages_nodejs
 
 # Build rule for target.
@@ -348,6 +335,19 @@ game_control_genlisp: cmake_check_build_system
 game_control_genlisp/fast:
 	$(MAKE) -f game_control/CMakeFiles/game_control_genlisp.dir/build.make game_control/CMakeFiles/game_control_genlisp.dir/build
 .PHONY : game_control_genlisp/fast
+
+#=============================================================================
+# Target rules for targets named game_control_generate_messages_lisp
+
+# Build rule for target.
+game_control_generate_messages_lisp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 game_control_generate_messages_lisp
+.PHONY : game_control_generate_messages_lisp
+
+# fast build rule for target.
+game_control_generate_messages_lisp/fast:
+	$(MAKE) -f game_control/CMakeFiles/game_control_generate_messages_lisp.dir/build.make game_control/CMakeFiles/game_control_generate_messages_lisp.dir/build
+.PHONY : game_control_generate_messages_lisp/fast
 
 #=============================================================================
 # Target rules for targets named _catkin_empty_exported_target
@@ -506,17 +506,43 @@ game_control_generate_messages_cpp/fast:
 .PHONY : game_control_generate_messages_cpp/fast
 
 #=============================================================================
-# Target rules for targets named game_control_generate_messages_lisp
+# Target rules for targets named game_control_gennodejs
 
 # Build rule for target.
-game_control_generate_messages_lisp: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 game_control_generate_messages_lisp
-.PHONY : game_control_generate_messages_lisp
+game_control_gennodejs: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 game_control_gennodejs
+.PHONY : game_control_gennodejs
 
 # fast build rule for target.
-game_control_generate_messages_lisp/fast:
-	$(MAKE) -f game_control/CMakeFiles/game_control_generate_messages_lisp.dir/build.make game_control/CMakeFiles/game_control_generate_messages_lisp.dir/build
-.PHONY : game_control_generate_messages_lisp/fast
+game_control_gennodejs/fast:
+	$(MAKE) -f game_control/CMakeFiles/game_control_gennodejs.dir/build.make game_control/CMakeFiles/game_control_gennodejs.dir/build
+.PHONY : game_control_gennodejs/fast
+
+#=============================================================================
+# Target rules for targets named _game_control_generate_messages_check_deps_GetUserScore
+
+# Build rule for target.
+_game_control_generate_messages_check_deps_GetUserScore: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 _game_control_generate_messages_check_deps_GetUserScore
+.PHONY : _game_control_generate_messages_check_deps_GetUserScore
+
+# fast build rule for target.
+_game_control_generate_messages_check_deps_GetUserScore/fast:
+	$(MAKE) -f game_control/CMakeFiles/_game_control_generate_messages_check_deps_GetUserScore.dir/build.make game_control/CMakeFiles/_game_control_generate_messages_check_deps_GetUserScore.dir/build
+.PHONY : _game_control_generate_messages_check_deps_GetUserScore/fast
+
+#=============================================================================
+# Target rules for targets named _game_control_generate_messages_check_deps_SetGameDifficulty
+
+# Build rule for target.
+_game_control_generate_messages_check_deps_SetGameDifficulty: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 _game_control_generate_messages_check_deps_SetGameDifficulty
+.PHONY : _game_control_generate_messages_check_deps_SetGameDifficulty
+
+# fast build rule for target.
+_game_control_generate_messages_check_deps_SetGameDifficulty/fast:
+	$(MAKE) -f game_control/CMakeFiles/_game_control_generate_messages_check_deps_SetGameDifficulty.dir/build.make game_control/CMakeFiles/_game_control_generate_messages_check_deps_SetGameDifficulty.dir/build
+.PHONY : _game_control_generate_messages_check_deps_SetGameDifficulty/fast
 
 # Help Target
 help:
@@ -541,10 +567,10 @@ help:
 	@echo "... gtest_main"
 	@echo "... gtest"
 	@echo "... game_control_genpy"
-	@echo "... game_control_gennodejs"
 	@echo "... game_control_generate_messages_nodejs"
 	@echo "... game_control_generate_messages_py"
 	@echo "... game_control_genlisp"
+	@echo "... game_control_generate_messages_lisp"
 	@echo "... _catkin_empty_exported_target"
 	@echo "... game_control_generate_messages"
 	@echo "... game_control_generate_messages_eus"
@@ -557,7 +583,9 @@ help:
 	@echo "... _game_control_generate_messages_check_deps_user_msg"
 	@echo "... game_control_geneus"
 	@echo "... game_control_generate_messages_cpp"
-	@echo "... game_control_generate_messages_lisp"
+	@echo "... game_control_gennodejs"
+	@echo "... _game_control_generate_messages_check_deps_GetUserScore"
+	@echo "... _game_control_generate_messages_check_deps_SetGameDifficulty"
 .PHONY : help
 
 
