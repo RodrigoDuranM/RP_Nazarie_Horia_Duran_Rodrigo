@@ -3,6 +3,7 @@
 import rospy
 from game_control.msg import user_msg
 from std_msgs.msg import String, Int64
+from game_control.srv import GetUserScore, SetGameDifficulty, GetUserScoreResponse, SetGameDifficultyResponse
 import pygame
 import random
 
@@ -51,6 +52,10 @@ class GameNode:
         self.result_pub = rospy.Publisher('result_information', Int64, queue_size=10)
         rospy.Subscriber('user_information', user_msg, self.user_info_callback)
         rospy.Subscriber('keyboard_control', String, self.keyboard_callback)
+
+        # Advertise services
+        rospy.Service('user_score', GetUserScore, self.handle_get_user_score)
+        rospy.Service('difficulty', SetGameDifficulty, self.handle_set_game_difficulty)
 
     def user_info_callback(self, msg):
         # Store user information received from INFO_USER node
@@ -190,6 +195,21 @@ class GameNode:
 
             pygame.display.flip()
             self.clock.tick(60)
+
+    # Service 1: GetUserScore
+    def handle_get_user_score(self, req):
+        rospy.loginfo(f"Returning score for user: {req.username}")
+        return GetUserScoreResponse(self.score)
+
+    # Service 2: SetGameDifficulty
+    def handle_set_game_difficulty(self, req):
+        if self.game_state != "welcome":
+            rospy.logwarn("Cannot change difficulty, not in phase1.")
+            return SetGameDifficultyResponse(success=False)
+        
+        rospy.loginfo(f"Setting game difficulty to {req.difficulty}")
+        # Implement logic to change the difficulty (e.g., modify speed or behavior of the game)
+        return SetGameDifficultyResponse(success=True)
 
 if __name__ == '__main__':
     rospy.init_node('game_node')
