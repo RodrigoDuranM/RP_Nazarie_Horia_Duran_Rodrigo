@@ -58,11 +58,9 @@ class GameNode:
         self.srv_set_game_difficulty = rospy.Service('difficulty', SetGameDifficulty, self.handle_set_game_difficulty)
 
     def handle_get_user_score(self, req):
-        # Here, we're returning a dummy score based on the user_name (you should have logic for calculating the actual score)
+        # Returning the actual score for the user
         rospy.loginfo(f"Returning score for user: {req.user_name}")
-        # Dummy score logic
-        score = random.randint(0, 100)  # Replace with your actual score logic
-        return GetUserScoreResponse(score)
+        return GetUserScoreResponse(self.score)  # Use the actual score stored in the game logic
 
     def handle_set_game_difficulty(self, req):
         # Only allow changing the difficulty in the 'welcome' phase (phase 1)
@@ -148,7 +146,7 @@ class GameNode:
             if self.ball.colliderect(brick):
                 self.bricks.remove(brick)
                 self.ball_speed_y = -self.ball_speed_y
-                self.score += 10
+                self.score += 10  # Increment the score when hitting a brick
 
         if self.ball.bottom >= self.HEIGHT:
             self.lives -= 1
