@@ -1,3 +1,3 @@
 string user_name
 ---
-float64 score_percentage
+int64 score
