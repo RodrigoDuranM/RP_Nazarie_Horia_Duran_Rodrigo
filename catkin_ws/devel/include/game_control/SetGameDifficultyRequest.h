@@ -24,17 +24,17 @@ struct SetGameDifficultyRequest_
   typedef SetGameDifficultyRequest_<ContainerAllocator> Type;
 
   SetGameDifficultyRequest_()
-    : difficulty()  {
+    : change_difficulty()  {
     }
   SetGameDifficultyRequest_(const ContainerAllocator& _alloc)
-    : difficulty(_alloc)  {
+    : change_difficulty(_alloc)  {
   (void)_alloc;
     }
 
 
 
-   typedef std::basic_string<char, std::char_traits<char>, typename std::allocator_traits<ContainerAllocator>::template rebind_alloc<char>> _difficulty_type;
-  _difficulty_type difficulty;
+   typedef std::basic_string<char, std::char_traits<char>, typename std::allocator_traits<ContainerAllocator>::template rebind_alloc<char>> _change_difficulty_type;
+  _change_difficulty_type change_difficulty;
 
 
 
@@ -65,7 +65,7 @@ return s;
 template<typename ContainerAllocator1, typename ContainerAllocator2>
 bool operator==(const ::game_control::SetGameDifficultyRequest_<ContainerAllocator1> & lhs, const ::game_control::SetGameDifficultyRequest_<ContainerAllocator2> & rhs)
 {
-  return lhs.difficulty == rhs.difficulty;
+  return lhs.change_difficulty == rhs.change_difficulty;
 }
 
 template<typename ContainerAllocator1, typename ContainerAllocator2>
@@ -122,12 +122,12 @@ struct MD5Sum< ::game_control::SetGameDifficultyRequest_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "46679fd82859481ca1fcc690066de35b";
+    return "b8a8d257ae7cf9a054243931c3dfd215";
   }
 
   static const char* value(const ::game_control::SetGameDifficultyRequest_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x46679fd82859481cULL;
-  static const uint64_t static_value2 = 0xa1fcc690066de35bULL;
+  static const uint64_t static_value1 = 0xb8a8d257ae7cf9a0ULL;
+  static const uint64_t static_value2 = 0x54243931c3dfd215ULL;
 };
 
 template<class ContainerAllocator>
@@ -146,7 +146,7 @@ struct Definition< ::game_control::SetGameDifficultyRequest_<ContainerAllocator>
 {
   static const char* value()
   {
-    return "string difficulty\n"
+    return "string change_difficulty\n"
 ;
   }
 
@@ -165,7 +165,7 @@ namespace serialization
   {
     template<typename Stream, typename T> inline static void allInOne(Stream& stream, T m)
     {
-      stream.next(m.difficulty);
+      stream.next(m.change_difficulty);
     }
 
     ROS_DECLARE_ALLINONE_SERIALIZER
@@ -184,8 +184,8 @@ struct Printer< ::game_control::SetGameDifficultyRequest_<ContainerAllocator> >
 {
   template<typename Stream> static void stream(Stream& s, const std::string& indent, const ::game_control::SetGameDifficultyRequest_<ContainerAllocator>& v)
   {
-    s << indent << "difficulty: ";
-    Printer<std::basic_string<char, std::char_traits<char>, typename std::allocator_traits<ContainerAllocator>::template rebind_alloc<char>>>::stream(s, indent + "  ", v.difficulty);
+    s << indent << "change_difficulty: ";
+    Printer<std::basic_string<char, std::char_traits<char>, typename std::allocator_traits<ContainerAllocator>::template rebind_alloc<char>>>::stream(s, indent + "  ", v.change_difficulty);
   }
 };
 

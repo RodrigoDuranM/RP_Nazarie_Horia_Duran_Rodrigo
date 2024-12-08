@@ -24,17 +24,17 @@ struct GetUserScoreResponse_
   typedef GetUserScoreResponse_<ContainerAllocator> Type;
 
   GetUserScoreResponse_()
-    : score_percentage(0.0)  {
+    : score(0)  {
     }
   GetUserScoreResponse_(const ContainerAllocator& _alloc)
-    : score_percentage(0.0)  {
+    : score(0)  {
   (void)_alloc;
     }
 
 
 
-   typedef double _score_percentage_type;
-  _score_percentage_type score_percentage;
+   typedef int64_t _score_type;
+  _score_type score;
 
 
 
@@ -65,7 +65,7 @@ return s;
 template<typename ContainerAllocator1, typename ContainerAllocator2>
 bool operator==(const ::game_control::GetUserScoreResponse_<ContainerAllocator1> & lhs, const ::game_control::GetUserScoreResponse_<ContainerAllocator2> & rhs)
 {
-  return lhs.score_percentage == rhs.score_percentage;
+  return lhs.score == rhs.score;
 }
 
 template<typename ContainerAllocator1, typename ContainerAllocator2>
@@ -122,12 +122,12 @@ struct MD5Sum< ::game_control::GetUserScoreResponse_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "c1a32e2a12011e18190e52b4e74c1757";
+    return "eaf3eca167acf95b8816d9344dba8b72";
   }
 
   static const char* value(const ::game_control::GetUserScoreResponse_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0xc1a32e2a12011e18ULL;
-  static const uint64_t static_value2 = 0x190e52b4e74c1757ULL;
+  static const uint64_t static_value1 = 0xeaf3eca167acf95bULL;
+  static const uint64_t static_value2 = 0x8816d9344dba8b72ULL;
 };
 
 template<class ContainerAllocator>
@@ -146,7 +146,7 @@ struct Definition< ::game_control::GetUserScoreResponse_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "float64 score_percentage\n"
+    return "int64 score\n"
 "\n"
 ;
   }
@@ -166,7 +166,7 @@ namespace serialization
   {
     template<typename Stream, typename T> inline static void allInOne(Stream& stream, T m)
     {
-      stream.next(m.score_percentage);
+      stream.next(m.score);
     }
 
     ROS_DECLARE_ALLINONE_SERIALIZER
@@ -185,8 +185,8 @@ struct Printer< ::game_control::GetUserScoreResponse_<ContainerAllocator> >
 {
   template<typename Stream> static void stream(Stream& s, const std::string& indent, const ::game_control::GetUserScoreResponse_<ContainerAllocator>& v)
   {
-    s << indent << "score_percentage: ";
-    Printer<double>::stream(s, indent + "  ", v.score_percentage);
+    s << indent << "score: ";
+    Printer<int64_t>::stream(s, indent + "  ", v.score);
   }
 };
 

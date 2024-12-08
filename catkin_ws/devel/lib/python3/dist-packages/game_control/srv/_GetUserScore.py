@@ -135,14 +135,14 @@ import struct
 
 
 class GetUserScoreResponse(genpy.Message):
-  _md5sum = "c1a32e2a12011e18190e52b4e74c1757"
+  _md5sum = "eaf3eca167acf95b8816d9344dba8b72"
   _type = "game_control/GetUserScoreResponse"
   _has_header = False  # flag to mark the presence of a Header object
-  _full_text = """float64 score_percentage
+  _full_text = """int64 score
 
 """
-  __slots__ = ['score_percentage']
-  _slot_types = ['float64']
+  __slots__ = ['score']
+  _slot_types = ['int64']
 
   def __init__(self, *args, **kwds):
     """
@@ -152,7 +152,7 @@ class GetUserScoreResponse(genpy.Message):
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       score_percentage
+       score
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -161,10 +161,10 @@ class GetUserScoreResponse(genpy.Message):
     if args or kwds:
       super(GetUserScoreResponse, self).__init__(*args, **kwds)
       # message fields cannot be None, assign default values for those that are
-      if self.score_percentage is None:
-        self.score_percentage = 0.
+      if self.score is None:
+        self.score = 0
     else:
-      self.score_percentage = 0.
+      self.score = 0
 
   def _get_types(self):
     """
@@ -178,8 +178,8 @@ class GetUserScoreResponse(genpy.Message):
     :param buff: buffer, ``StringIO``
     """
     try:
-      _x = self.score_percentage
-      buff.write(_get_struct_d().pack(_x))
+      _x = self.score
+      buff.write(_get_struct_q().pack(_x))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -194,7 +194,7 @@ class GetUserScoreResponse(genpy.Message):
       end = 0
       start = end
       end += 8
-      (self.score_percentage,) = _get_struct_d().unpack(str[start:end])
+      (self.score,) = _get_struct_q().unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e)  # most likely buffer underfill
@@ -207,8 +207,8 @@ class GetUserScoreResponse(genpy.Message):
     :param numpy: numpy python module
     """
     try:
-      _x = self.score_percentage
-      buff.write(_get_struct_d().pack(_x))
+      _x = self.score
+      buff.write(_get_struct_q().pack(_x))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -224,7 +224,7 @@ class GetUserScoreResponse(genpy.Message):
       end = 0
       start = end
       end += 8
-      (self.score_percentage,) = _get_struct_d().unpack(str[start:end])
+      (self.score,) = _get_struct_q().unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e)  # most likely buffer underfill
@@ -233,14 +233,14 @@ _struct_I = genpy.struct_I
 def _get_struct_I():
     global _struct_I
     return _struct_I
-_struct_d = None
-def _get_struct_d():
-    global _struct_d
-    if _struct_d is None:
-        _struct_d = struct.Struct("<d")
-    return _struct_d
+_struct_q = None
+def _get_struct_q():
+    global _struct_q
+    if _struct_q is None:
+        _struct_q = struct.Struct("<q")
+    return _struct_q
 class GetUserScore(object):
   _type          = 'game_control/GetUserScore'
-  _md5sum = 'e10e2705e269839872c95ff0a89588d4'
+  _md5sum = '6dbf2818ed2a67e5ff5a9a7493308436'
   _request_class  = GetUserScoreRequest
   _response_class = GetUserScoreResponse

@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
 import rospy
+from game_control.srv import GetUserScore, GetUserScoreResponse, SetGameDifficulty, SetGameDifficultyResponse
 from game_control.msg import user_msg
 from std_msgs.msg import String, Int64
-from game_control.srv import GetUserScore, SetGameDifficulty, GetUserScoreResponse, SetGameDifficultyResponse
 import pygame
 import random
 
@@ -53,19 +53,40 @@ class GameNode:
         rospy.Subscriber('user_information', user_msg, self.user_info_callback)
         rospy.Subscriber('keyboard_control', String, self.keyboard_callback)
 
-        # Advertise services
-        rospy.Service('user_score', GetUserScore, self.handle_get_user_score)
-        rospy.Service('difficulty', SetGameDifficulty, self.handle_set_game_difficulty)
+        # Service handlers
+        self.srv_get_user_score = rospy.Service('user_score', GetUserScore, self.handle_get_user_score)
+        self.srv_set_game_difficulty = rospy.Service('difficulty', SetGameDifficulty, self.handle_set_game_difficulty)
+
+    def handle_get_user_score(self, req):
+        # Here, we're returning a dummy score based on the user_name (you should have logic for calculating the actual score)
+        rospy.loginfo(f"Returning score for user: {req.user_name}")
+        # Dummy score logic
+        score = random.randint(0, 100)  # Replace with your actual score logic
+        return GetUserScoreResponse(score)
+
+    def handle_set_game_difficulty(self, req):
+        # Only allow changing the difficulty in the 'welcome' phase (phase 1)
+        if self.game_state == "welcome":
+            rospy.loginfo(f"Setting game difficulty to {req.change_difficulty}")
+            # Adjust game difficulty here (this is a simple example, you can expand it)
+            if req.change_difficulty == "easy":
+                self.level = 1
+            elif req.change_difficulty == "medium":
+                self.level = 2
+            elif req.change_difficulty == "hard":
+                self.level = 3
+            return SetGameDifficultyResponse(True)  # Success in phase 1
+        else:
+            rospy.logwarn("Cannot change difficulty. Not in 'welcome' phase.")
+            return SetGameDifficultyResponse(False)  # Failure if not in phase 1
 
     def user_info_callback(self, msg):
-        # Store user information received from INFO_USER node
         self.user_name = msg.name
         self.user_username = msg.username
         self.user_age = msg.age
         rospy.loginfo(f"User Info: Name - {self.user_name}, Username - {self.user_username}, Age - {self.user_age}")
 
     def keyboard_callback(self, msg):
-        # Handle movement commands or start command
         if msg.data == "START" and self.game_state == "welcome":
             self.game_state = "playing"  # Transition to playing phase
             self.reset_ball()
@@ -111,29 +132,24 @@ class GameNode:
         for brick in self.bricks:
             pygame.draw.rect(self.screen, (255, 0, 0), brick)
 
-        # Move the ball
         self.ball.x += self.ball_speed_x
         self.ball.y += self.ball_speed_y
 
-        # Ball collision with walls
         if self.ball.left <= 0 or self.ball.right >= self.WIDTH:
             self.ball_speed_x = -self.ball_speed_x
         if self.ball.top <= 0:
             self.ball_speed_y = -self.ball_speed_y
 
-        # Ball collision with player
         if self.ball.colliderect(self.player):
             self.ball_speed_y = -self.ball_speed_y
             self.ball_speed_x += random.uniform(-0.5, 0.5)
 
-        # Ball collision with bricks
         for brick in self.bricks[:]:
             if self.ball.colliderect(brick):
                 self.bricks.remove(brick)
                 self.ball_speed_y = -self.ball_speed_y
                 self.score += 10
 
-        # Ball out of bounds
         if self.ball.bottom >= self.HEIGHT:
             self.lives -= 1
             if self.lives > 0:
@@ -141,7 +157,6 @@ class GameNode:
             else:
                 self.game_state = "game_over"
 
-        # Level complete
         if len(self.bricks) == 0:
             self.level += 1
             self.ball_speed_x *= 1.2
@@ -157,59 +172,25 @@ class GameNode:
     def final_phase(self):
         self.screen.fill((0, 0, 0))
         self.draw_text(f"Game Over! Final Score: {self.score}", (255, 255, 255), self.WIDTH // 2, self.HEIGHT // 2)
-
-        # Publish final score to result_information
         self.result_pub.publish(self.score)
         self.score_sent = True
 
     def game_loop(self):
         running = True
-        welcome_print = 0
-        game_print = 0
-        end_print = 0
         while running:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
 
-            # Welcome Phase
             if self.game_state == "welcome":
-                if welcome_print == 0:
-                    rospy.loginfo("Welcome phase started")
-                    welcome_print = 1
                 self.welcome_phase()
-
-            # Playing Phase
             elif self.game_state == "playing":
-                if game_print == 0:
-                    rospy.loginfo("Playing phase started")
-                    game_print = 1
                 self.game_phase()
-
-            # Game Over Phase
             elif self.game_state == "game_over" and not self.score_sent:
-                if end_print == 0:
-                    rospy.loginfo("Game over phase started")
-                    end_print = 1
                 self.final_phase()
 
             pygame.display.flip()
             self.clock.tick(60)
-
-    # Service 1: GetUserScore
-    def handle_get_user_score(self, req):
-        rospy.loginfo(f"Returning score for user: {req.username}")
-        return GetUserScoreResponse(self.score)
-
-    # Service 2: SetGameDifficulty
-    def handle_set_game_difficulty(self, req):
-        if self.game_state != "welcome":
-            rospy.logwarn("Cannot change difficulty, not in phase1.")
-            return SetGameDifficultyResponse(success=False)
-        
-        rospy.loginfo(f"Setting game difficulty to {req.difficulty}")
-        # Implement logic to change the difficulty (e.g., modify speed or behavior of the game)
-        return SetGameDifficultyResponse(success=True)
 
 if __name__ == '__main__':
     rospy.init_node('game_node')

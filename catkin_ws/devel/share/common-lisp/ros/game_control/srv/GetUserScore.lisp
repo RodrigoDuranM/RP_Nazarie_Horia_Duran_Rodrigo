@@ -55,10 +55,10 @@
   "game_control/GetUserScoreRequest")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql '<GetUserScore-request>)))
   "Returns md5sum for a message object of type '<GetUserScore-request>"
-  "e10e2705e269839872c95ff0a89588d4")
+  "6dbf2818ed2a67e5ff5a9a7493308436")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql 'GetUserScore-request)))
   "Returns md5sum for a message object of type 'GetUserScore-request"
-  "e10e2705e269839872c95ff0a89588d4")
+  "6dbf2818ed2a67e5ff5a9a7493308436")
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql '<GetUserScore-request>)))
   "Returns full string definition for message of type '<GetUserScore-request>"
   (cl:format cl:nil "string user_name~%~%~%"))
@@ -77,11 +77,11 @@
 ;//! \htmlinclude GetUserScore-response.msg.html
 
 (cl:defclass <GetUserScore-response> (roslisp-msg-protocol:ros-message)
-  ((score_percentage
-    :reader score_percentage
-    :initarg :score_percentage
-    :type cl:float
-    :initform 0.0))
+  ((score
+    :reader score
+    :initarg :score
+    :type cl:integer
+    :initform 0))
 )
 
 (cl:defclass GetUserScore-response (<GetUserScore-response>)
@@ -92,34 +92,35 @@
   (cl:unless (cl:typep m 'GetUserScore-response)
     (roslisp-msg-protocol:msg-deprecation-warning "using old message class name game_control-srv:<GetUserScore-response> is deprecated: use game_control-srv:GetUserScore-response instead.")))
 
-(cl:ensure-generic-function 'score_percentage-val :lambda-list '(m))
-(cl:defmethod score_percentage-val ((m <GetUserScore-response>))
-  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader game_control-srv:score_percentage-val is deprecated.  Use game_control-srv:score_percentage instead.")
-  (score_percentage m))
+(cl:ensure-generic-function 'score-val :lambda-list '(m))
+(cl:defmethod score-val ((m <GetUserScore-response>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader game_control-srv:score-val is deprecated.  Use game_control-srv:score instead.")
+  (score m))
 (cl:defmethod roslisp-msg-protocol:serialize ((msg <GetUserScore-response>) ostream)
   "Serializes a message object of type '<GetUserScore-response>"
-  (cl:let ((bits (roslisp-utils:encode-double-float-bits (cl:slot-value msg 'score_percentage))))
-    (cl:write-byte (cl:ldb (cl:byte 8 0) bits) ostream)
-    (cl:write-byte (cl:ldb (cl:byte 8 8) bits) ostream)
-    (cl:write-byte (cl:ldb (cl:byte 8 16) bits) ostream)
-    (cl:write-byte (cl:ldb (cl:byte 8 24) bits) ostream)
-    (cl:write-byte (cl:ldb (cl:byte 8 32) bits) ostream)
-    (cl:write-byte (cl:ldb (cl:byte 8 40) bits) ostream)
-    (cl:write-byte (cl:ldb (cl:byte 8 48) bits) ostream)
-    (cl:write-byte (cl:ldb (cl:byte 8 56) bits) ostream))
+  (cl:let* ((signed (cl:slot-value msg 'score)) (unsigned (cl:if (cl:< signed 0) (cl:+ signed 18446744073709551616) signed)))
+    (cl:write-byte (cl:ldb (cl:byte 8 0) unsigned) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 8) unsigned) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 16) unsigned) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 24) unsigned) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 32) unsigned) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 40) unsigned) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 48) unsigned) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 56) unsigned) ostream)
+    )
 )
 (cl:defmethod roslisp-msg-protocol:deserialize ((msg <GetUserScore-response>) istream)
   "Deserializes a message object of type '<GetUserScore-response>"
-    (cl:let ((bits 0))
-      (cl:setf (cl:ldb (cl:byte 8 0) bits) (cl:read-byte istream))
-      (cl:setf (cl:ldb (cl:byte 8 8) bits) (cl:read-byte istream))
-      (cl:setf (cl:ldb (cl:byte 8 16) bits) (cl:read-byte istream))
-      (cl:setf (cl:ldb (cl:byte 8 24) bits) (cl:read-byte istream))
-      (cl:setf (cl:ldb (cl:byte 8 32) bits) (cl:read-byte istream))
-      (cl:setf (cl:ldb (cl:byte 8 40) bits) (cl:read-byte istream))
-      (cl:setf (cl:ldb (cl:byte 8 48) bits) (cl:read-byte istream))
-      (cl:setf (cl:ldb (cl:byte 8 56) bits) (cl:read-byte istream))
-    (cl:setf (cl:slot-value msg 'score_percentage) (roslisp-utils:decode-double-float-bits bits)))
+    (cl:let ((unsigned 0))
+      (cl:setf (cl:ldb (cl:byte 8 0) unsigned) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 8) unsigned) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 16) unsigned) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 24) unsigned) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 32) unsigned) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 40) unsigned) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 48) unsigned) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 56) unsigned) (cl:read-byte istream))
+      (cl:setf (cl:slot-value msg 'score) (cl:if (cl:< unsigned 9223372036854775808) unsigned (cl:- unsigned 18446744073709551616))))
   msg
 )
 (cl:defmethod roslisp-msg-protocol:ros-datatype ((msg (cl:eql '<GetUserScore-response>)))
@@ -130,16 +131,16 @@
   "game_control/GetUserScoreResponse")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql '<GetUserScore-response>)))
   "Returns md5sum for a message object of type '<GetUserScore-response>"
-  "e10e2705e269839872c95ff0a89588d4")
+  "6dbf2818ed2a67e5ff5a9a7493308436")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql 'GetUserScore-response)))
   "Returns md5sum for a message object of type 'GetUserScore-response"
-  "e10e2705e269839872c95ff0a89588d4")
+  "6dbf2818ed2a67e5ff5a9a7493308436")
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql '<GetUserScore-response>)))
   "Returns full string definition for message of type '<GetUserScore-response>"
-  (cl:format cl:nil "float64 score_percentage~%~%~%~%"))
+  (cl:format cl:nil "int64 score~%~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql 'GetUserScore-response)))
   "Returns full string definition for message of type 'GetUserScore-response"
-  (cl:format cl:nil "float64 score_percentage~%~%~%~%"))
+  (cl:format cl:nil "int64 score~%~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:serialization-length ((msg <GetUserScore-response>))
   (cl:+ 0
      8
@@ -147,7 +148,7 @@
 (cl:defmethod roslisp-msg-protocol:ros-message-to-list ((msg <GetUserScore-response>))
   "Converts a ROS message object to a list"
   (cl:list 'GetUserScore-response
-    (cl:cons ':score_percentage (score_percentage msg))
+    (cl:cons ':score (score msg))
 ))
 (cl:defmethod roslisp-msg-protocol:service-request-type ((msg (cl:eql 'GetUserScore)))
   'GetUserScore-request)

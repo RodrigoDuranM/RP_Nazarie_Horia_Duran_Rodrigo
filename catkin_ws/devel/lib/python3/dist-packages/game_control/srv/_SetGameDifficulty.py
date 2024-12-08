@@ -8,12 +8,12 @@ import struct
 
 
 class SetGameDifficultyRequest(genpy.Message):
-  _md5sum = "46679fd82859481ca1fcc690066de35b"
+  _md5sum = "b8a8d257ae7cf9a054243931c3dfd215"
   _type = "game_control/SetGameDifficultyRequest"
   _has_header = False  # flag to mark the presence of a Header object
-  _full_text = """string difficulty
+  _full_text = """string change_difficulty
 """
-  __slots__ = ['difficulty']
+  __slots__ = ['change_difficulty']
   _slot_types = ['string']
 
   def __init__(self, *args, **kwds):
@@ -24,7 +24,7 @@ class SetGameDifficultyRequest(genpy.Message):
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       difficulty
+       change_difficulty
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -33,10 +33,10 @@ class SetGameDifficultyRequest(genpy.Message):
     if args or kwds:
       super(SetGameDifficultyRequest, self).__init__(*args, **kwds)
       # message fields cannot be None, assign default values for those that are
-      if self.difficulty is None:
-        self.difficulty = ''
+      if self.change_difficulty is None:
+        self.change_difficulty = ''
     else:
-      self.difficulty = ''
+      self.change_difficulty = ''
 
   def _get_types(self):
     """
@@ -50,7 +50,7 @@ class SetGameDifficultyRequest(genpy.Message):
     :param buff: buffer, ``StringIO``
     """
     try:
-      _x = self.difficulty
+      _x = self.change_difficulty
       length = len(_x)
       if python3 or type(_x) == unicode:
         _x = _x.encode('utf-8')
@@ -74,9 +74,9 @@ class SetGameDifficultyRequest(genpy.Message):
       start = end
       end += length
       if python3:
-        self.difficulty = str[start:end].decode('utf-8', 'rosmsg')
+        self.change_difficulty = str[start:end].decode('utf-8', 'rosmsg')
       else:
-        self.difficulty = str[start:end]
+        self.change_difficulty = str[start:end]
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e)  # most likely buffer underfill
@@ -89,7 +89,7 @@ class SetGameDifficultyRequest(genpy.Message):
     :param numpy: numpy python module
     """
     try:
-      _x = self.difficulty
+      _x = self.change_difficulty
       length = len(_x)
       if python3 or type(_x) == unicode:
         _x = _x.encode('utf-8')
@@ -114,9 +114,9 @@ class SetGameDifficultyRequest(genpy.Message):
       start = end
       end += length
       if python3:
-        self.difficulty = str[start:end].decode('utf-8', 'rosmsg')
+        self.change_difficulty = str[start:end].decode('utf-8', 'rosmsg')
       else:
-        self.difficulty = str[start:end]
+        self.change_difficulty = str[start:end]
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e)  # most likely buffer underfill
@@ -243,6 +243,6 @@ def _get_struct_B():
     return _struct_B
 class SetGameDifficulty(object):
   _type          = 'game_control/SetGameDifficulty'
-  _md5sum = '790cc17e982cca965724bd72418a57ae'
+  _md5sum = '9d6c7c12eefb5ab4ae8ce42c4c512e6f'
   _request_class  = SetGameDifficultyRequest
   _response_class = SetGameDifficultyResponse

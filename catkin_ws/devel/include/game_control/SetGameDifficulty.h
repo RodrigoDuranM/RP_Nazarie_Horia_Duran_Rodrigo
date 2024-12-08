@@ -40,7 +40,7 @@ template<>
 struct MD5Sum< ::game_control::SetGameDifficulty > {
   static const char* value()
   {
-    return "790cc17e982cca965724bd72418a57ae";
+    return "9d6c7c12eefb5ab4ae8ce42c4c512e6f";
   }
 
   static const char* value(const ::game_control::SetGameDifficulty&) { return value(); }

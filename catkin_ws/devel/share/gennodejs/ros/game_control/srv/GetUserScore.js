@@ -94,22 +94,22 @@ class GetUserScoreResponse {
   constructor(initObj={}) {
     if (initObj === null) {
       // initObj === null is a special case for deserialization where we don't initialize fields
-      this.score_percentage = null;
+      this.score = null;
     }
     else {
-      if (initObj.hasOwnProperty('score_percentage')) {
-        this.score_percentage = initObj.score_percentage
+      if (initObj.hasOwnProperty('score')) {
+        this.score = initObj.score
       }
       else {
-        this.score_percentage = 0.0;
+        this.score = 0;
       }
     }
   }
 
   static serialize(obj, buffer, bufferOffset) {
     // Serializes a message object of type GetUserScoreResponse
-    // Serialize message field [score_percentage]
-    bufferOffset = _serializer.float64(obj.score_percentage, buffer, bufferOffset);
+    // Serialize message field [score]
+    bufferOffset = _serializer.int64(obj.score, buffer, bufferOffset);
     return bufferOffset;
   }
 
@@ -117,8 +117,8 @@ class GetUserScoreResponse {
     //deserializes a message object of type GetUserScoreResponse
     let len;
     let data = new GetUserScoreResponse(null);
-    // Deserialize message field [score_percentage]
-    data.score_percentage = _deserializer.float64(buffer, bufferOffset);
+    // Deserialize message field [score]
+    data.score = _deserializer.int64(buffer, bufferOffset);
     return data;
   }
 
@@ -133,13 +133,13 @@ class GetUserScoreResponse {
 
   static md5sum() {
     //Returns md5sum for a message object
-    return 'c1a32e2a12011e18190e52b4e74c1757';
+    return 'eaf3eca167acf95b8816d9344dba8b72';
   }
 
   static messageDefinition() {
     // Returns full string definition for message
     return `
-    float64 score_percentage
+    int64 score
     
     
     `;
@@ -151,11 +151,11 @@ class GetUserScoreResponse {
       msg = {};
     }
     const resolved = new GetUserScoreResponse(null);
-    if (msg.score_percentage !== undefined) {
-      resolved.score_percentage = msg.score_percentage;
+    if (msg.score !== undefined) {
+      resolved.score = msg.score;
     }
     else {
-      resolved.score_percentage = 0.0
+      resolved.score = 0
     }
 
     return resolved;
@@ -165,6 +165,6 @@ class GetUserScoreResponse {
 module.exports = {
   Request: GetUserScoreRequest,
   Response: GetUserScoreResponse,
-  md5sum() { return 'e10e2705e269839872c95ff0a89588d4'; },
+  md5sum() { return '6dbf2818ed2a67e5ff5a9a7493308436'; },
   datatype() { return 'game_control/GetUserScore'; }
 };

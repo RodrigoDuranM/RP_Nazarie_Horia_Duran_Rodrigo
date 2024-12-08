@@ -21,22 +21,22 @@ class SetGameDifficultyRequest {
   constructor(initObj={}) {
     if (initObj === null) {
       // initObj === null is a special case for deserialization where we don't initialize fields
-      this.difficulty = null;
+      this.change_difficulty = null;
     }
     else {
-      if (initObj.hasOwnProperty('difficulty')) {
-        this.difficulty = initObj.difficulty
+      if (initObj.hasOwnProperty('change_difficulty')) {
+        this.change_difficulty = initObj.change_difficulty
       }
       else {
-        this.difficulty = '';
+        this.change_difficulty = '';
       }
     }
   }
 
   static serialize(obj, buffer, bufferOffset) {
     // Serializes a message object of type SetGameDifficultyRequest
-    // Serialize message field [difficulty]
-    bufferOffset = _serializer.string(obj.difficulty, buffer, bufferOffset);
+    // Serialize message field [change_difficulty]
+    bufferOffset = _serializer.string(obj.change_difficulty, buffer, bufferOffset);
     return bufferOffset;
   }
 
@@ -44,14 +44,14 @@ class SetGameDifficultyRequest {
     //deserializes a message object of type SetGameDifficultyRequest
     let len;
     let data = new SetGameDifficultyRequest(null);
-    // Deserialize message field [difficulty]
-    data.difficulty = _deserializer.string(buffer, bufferOffset);
+    // Deserialize message field [change_difficulty]
+    data.change_difficulty = _deserializer.string(buffer, bufferOffset);
     return data;
   }
 
   static getMessageSize(object) {
     let length = 0;
-    length += _getByteLength(object.difficulty);
+    length += _getByteLength(object.change_difficulty);
     return length + 4;
   }
 
@@ -62,13 +62,13 @@ class SetGameDifficultyRequest {
 
   static md5sum() {
     //Returns md5sum for a message object
-    return '46679fd82859481ca1fcc690066de35b';
+    return 'b8a8d257ae7cf9a054243931c3dfd215';
   }
 
   static messageDefinition() {
     // Returns full string definition for message
     return `
-    string difficulty
+    string change_difficulty
     
     `;
   }
@@ -79,11 +79,11 @@ class SetGameDifficultyRequest {
       msg = {};
     }
     const resolved = new SetGameDifficultyRequest(null);
-    if (msg.difficulty !== undefined) {
-      resolved.difficulty = msg.difficulty;
+    if (msg.change_difficulty !== undefined) {
+      resolved.change_difficulty = msg.change_difficulty;
     }
     else {
-      resolved.difficulty = ''
+      resolved.change_difficulty = ''
     }
 
     return resolved;
@@ -165,6 +165,6 @@ class SetGameDifficultyResponse {
 module.exports = {
   Request: SetGameDifficultyRequest,
   Response: SetGameDifficultyResponse,
-  md5sum() { return '790cc17e982cca965724bd72418a57ae'; },
+  md5sum() { return '9d6c7c12eefb5ab4ae8ce42c4c512e6f'; },
   datatype() { return 'game_control/SetGameDifficulty'; }
 };

@@ -20,37 +20,37 @@
 
 (defclass game_control::SetGameDifficultyRequest
   :super ros::object
-  :slots (_difficulty ))
+  :slots (_change_difficulty ))
 
 (defmethod game_control::SetGameDifficultyRequest
   (:init
    (&key
-    ((:difficulty __difficulty) "")
+    ((:change_difficulty __change_difficulty) "")
     )
    (send-super :init)
-   (setq _difficulty (string __difficulty))
+   (setq _change_difficulty (string __change_difficulty))
    self)
-  (:difficulty
-   (&optional __difficulty)
-   (if __difficulty (setq _difficulty __difficulty)) _difficulty)
+  (:change_difficulty
+   (&optional __change_difficulty)
+   (if __change_difficulty (setq _change_difficulty __change_difficulty)) _change_difficulty)
   (:serialization-length
    ()
    (+
-    ;; string _difficulty
-    4 (length _difficulty)
+    ;; string _change_difficulty
+    4 (length _change_difficulty)
     ))
   (:serialize
    (&optional strm)
    (let ((s (if strm strm
               (make-string-output-stream (send self :serialization-length)))))
-     ;; string _difficulty
-       (write-long (length _difficulty) s) (princ _difficulty s)
+     ;; string _change_difficulty
+       (write-long (length _change_difficulty) s) (princ _change_difficulty s)
      ;;
      (if (null strm) (get-output-stream-string s))))
   (:deserialize
    (buf &optional (ptr- 0))
-   ;; string _difficulty
-     (let (n) (setq n (sys::peek buf ptr- :integer)) (incf ptr- 4) (setq _difficulty (subseq buf ptr- (+ ptr- n))) (incf ptr- n))
+   ;; string _change_difficulty
+     (let (n) (setq n (sys::peek buf ptr- :integer)) (incf ptr- 4) (setq _change_difficulty (subseq buf ptr- (+ ptr- n))) (incf ptr- n))
    ;;
    self)
   )
@@ -96,7 +96,7 @@
   :super ros::object
   :slots ())
 
-(setf (get game_control::SetGameDifficulty :md5sum-) "790cc17e982cca965724bd72418a57ae")
+(setf (get game_control::SetGameDifficulty :md5sum-) "9d6c7c12eefb5ab4ae8ce42c4c512e6f")
 (setf (get game_control::SetGameDifficulty :datatype-) "game_control/SetGameDifficulty")
 (setf (get game_control::SetGameDifficulty :request) game_control::SetGameDifficultyRequest)
 (setf (get game_control::SetGameDifficulty :response) game_control::SetGameDifficultyResponse)
@@ -104,19 +104,19 @@
 (defmethod game_control::SetGameDifficultyRequest
   (:response () (instance game_control::SetGameDifficultyResponse :init)))
 
-(setf (get game_control::SetGameDifficultyRequest :md5sum-) "790cc17e982cca965724bd72418a57ae")
+(setf (get game_control::SetGameDifficultyRequest :md5sum-) "9d6c7c12eefb5ab4ae8ce42c4c512e6f")
 (setf (get game_control::SetGameDifficultyRequest :datatype-) "game_control/SetGameDifficultyRequest")
 (setf (get game_control::SetGameDifficultyRequest :definition-)
-      "string difficulty
+      "string change_difficulty
 ---
 bool success
 
 ")
 
-(setf (get game_control::SetGameDifficultyResponse :md5sum-) "790cc17e982cca965724bd72418a57ae")
+(setf (get game_control::SetGameDifficultyResponse :md5sum-) "9d6c7c12eefb5ab4ae8ce42c4c512e6f")
 (setf (get game_control::SetGameDifficultyResponse :datatype-) "game_control/SetGameDifficultyResponse")
 (setf (get game_control::SetGameDifficultyResponse :definition-)
-      "string difficulty
+      "string change_difficulty
 ---
 bool success
 
@@ -124,6 +124,6 @@ bool success
 
 
 
-(provide :game_control/SetGameDifficulty "790cc17e982cca965724bd72418a57ae")
+(provide :game_control/SetGameDifficulty "9d6c7c12eefb5ab4ae8ce42c4c512e6f")
 
 

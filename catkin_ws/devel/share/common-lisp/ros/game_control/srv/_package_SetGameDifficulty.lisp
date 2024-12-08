@@ -1,6 +1,6 @@
 (cl:in-package game_control-srv)
-(cl:export '(DIFFICULTY-VAL
-          DIFFICULTY
+(cl:export '(CHANGE_DIFFICULTY-VAL
+          CHANGE_DIFFICULTY
           SUCCESS-VAL
           SUCCESS
 ))

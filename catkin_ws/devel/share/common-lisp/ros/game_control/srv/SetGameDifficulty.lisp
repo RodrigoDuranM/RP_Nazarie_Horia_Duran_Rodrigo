@@ -7,9 +7,9 @@
 ;//! \htmlinclude SetGameDifficulty-request.msg.html
 
 (cl:defclass <SetGameDifficulty-request> (roslisp-msg-protocol:ros-message)
-  ((difficulty
-    :reader difficulty
-    :initarg :difficulty
+  ((change_difficulty
+    :reader change_difficulty
+    :initarg :change_difficulty
     :type cl:string
     :initform ""))
 )
@@ -22,18 +22,18 @@
   (cl:unless (cl:typep m 'SetGameDifficulty-request)
     (roslisp-msg-protocol:msg-deprecation-warning "using old message class name game_control-srv:<SetGameDifficulty-request> is deprecated: use game_control-srv:SetGameDifficulty-request instead.")))
 
-(cl:ensure-generic-function 'difficulty-val :lambda-list '(m))
-(cl:defmethod difficulty-val ((m <SetGameDifficulty-request>))
-  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader game_control-srv:difficulty-val is deprecated.  Use game_control-srv:difficulty instead.")
-  (difficulty m))
+(cl:ensure-generic-function 'change_difficulty-val :lambda-list '(m))
+(cl:defmethod change_difficulty-val ((m <SetGameDifficulty-request>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader game_control-srv:change_difficulty-val is deprecated.  Use game_control-srv:change_difficulty instead.")
+  (change_difficulty m))
 (cl:defmethod roslisp-msg-protocol:serialize ((msg <SetGameDifficulty-request>) ostream)
   "Serializes a message object of type '<SetGameDifficulty-request>"
-  (cl:let ((__ros_str_len (cl:length (cl:slot-value msg 'difficulty))))
+  (cl:let ((__ros_str_len (cl:length (cl:slot-value msg 'change_difficulty))))
     (cl:write-byte (cl:ldb (cl:byte 8 0) __ros_str_len) ostream)
     (cl:write-byte (cl:ldb (cl:byte 8 8) __ros_str_len) ostream)
     (cl:write-byte (cl:ldb (cl:byte 8 16) __ros_str_len) ostream)
     (cl:write-byte (cl:ldb (cl:byte 8 24) __ros_str_len) ostream))
-  (cl:map cl:nil #'(cl:lambda (c) (cl:write-byte (cl:char-code c) ostream)) (cl:slot-value msg 'difficulty))
+  (cl:map cl:nil #'(cl:lambda (c) (cl:write-byte (cl:char-code c) ostream)) (cl:slot-value msg 'change_difficulty))
 )
 (cl:defmethod roslisp-msg-protocol:deserialize ((msg <SetGameDifficulty-request>) istream)
   "Deserializes a message object of type '<SetGameDifficulty-request>"
@@ -42,9 +42,9 @@
       (cl:setf (cl:ldb (cl:byte 8 8) __ros_str_len) (cl:read-byte istream))
       (cl:setf (cl:ldb (cl:byte 8 16) __ros_str_len) (cl:read-byte istream))
       (cl:setf (cl:ldb (cl:byte 8 24) __ros_str_len) (cl:read-byte istream))
-      (cl:setf (cl:slot-value msg 'difficulty) (cl:make-string __ros_str_len))
+      (cl:setf (cl:slot-value msg 'change_difficulty) (cl:make-string __ros_str_len))
       (cl:dotimes (__ros_str_idx __ros_str_len msg)
-        (cl:setf (cl:char (cl:slot-value msg 'difficulty) __ros_str_idx) (cl:code-char (cl:read-byte istream)))))
+        (cl:setf (cl:char (cl:slot-value msg 'change_difficulty) __ros_str_idx) (cl:code-char (cl:read-byte istream)))))
   msg
 )
 (cl:defmethod roslisp-msg-protocol:ros-datatype ((msg (cl:eql '<SetGameDifficulty-request>)))
@@ -55,24 +55,24 @@
   "game_control/SetGameDifficultyRequest")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql '<SetGameDifficulty-request>)))
   "Returns md5sum for a message object of type '<SetGameDifficulty-request>"
-  "790cc17e982cca965724bd72418a57ae")
+  "9d6c7c12eefb5ab4ae8ce42c4c512e6f")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql 'SetGameDifficulty-request)))
   "Returns md5sum for a message object of type 'SetGameDifficulty-request"
-  "790cc17e982cca965724bd72418a57ae")
+  "9d6c7c12eefb5ab4ae8ce42c4c512e6f")
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql '<SetGameDifficulty-request>)))
   "Returns full string definition for message of type '<SetGameDifficulty-request>"
-  (cl:format cl:nil "string difficulty~%~%~%"))
+  (cl:format cl:nil "string change_difficulty~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql 'SetGameDifficulty-request)))
   "Returns full string definition for message of type 'SetGameDifficulty-request"
-  (cl:format cl:nil "string difficulty~%~%~%"))
+  (cl:format cl:nil "string change_difficulty~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:serialization-length ((msg <SetGameDifficulty-request>))
   (cl:+ 0
-     4 (cl:length (cl:slot-value msg 'difficulty))
+     4 (cl:length (cl:slot-value msg 'change_difficulty))
 ))
 (cl:defmethod roslisp-msg-protocol:ros-message-to-list ((msg <SetGameDifficulty-request>))
   "Converts a ROS message object to a list"
   (cl:list 'SetGameDifficulty-request
-    (cl:cons ':difficulty (difficulty msg))
+    (cl:cons ':change_difficulty (change_difficulty msg))
 ))
 ;//! \htmlinclude SetGameDifficulty-response.msg.html
 
@@ -113,10 +113,10 @@
   "game_control/SetGameDifficultyResponse")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql '<SetGameDifficulty-response>)))
   "Returns md5sum for a message object of type '<SetGameDifficulty-response>"
-  "790cc17e982cca965724bd72418a57ae")
+  "9d6c7c12eefb5ab4ae8ce42c4c512e6f")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql 'SetGameDifficulty-response)))
   "Returns md5sum for a message object of type 'SetGameDifficulty-response"
-  "790cc17e982cca965724bd72418a57ae")
+  "9d6c7c12eefb5ab4ae8ce42c4c512e6f")
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql '<SetGameDifficulty-response>)))
   "Returns full string definition for message of type '<SetGameDifficulty-response>"
   (cl:format cl:nil "bool success~%~%~%~%"))

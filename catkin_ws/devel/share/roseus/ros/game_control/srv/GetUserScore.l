@@ -57,37 +57,57 @@
 
 (defclass game_control::GetUserScoreResponse
   :super ros::object
-  :slots (_score_percentage ))
+  :slots (_score ))
 
 (defmethod game_control::GetUserScoreResponse
   (:init
    (&key
-    ((:score_percentage __score_percentage) 0.0)
+    ((:score __score) 0)
     )
    (send-super :init)
-   (setq _score_percentage (float __score_percentage))
+   (setq _score (round __score))
    self)
-  (:score_percentage
-   (&optional __score_percentage)
-   (if __score_percentage (setq _score_percentage __score_percentage)) _score_percentage)
+  (:score
+   (&optional __score)
+   (if __score (setq _score __score)) _score)
   (:serialization-length
    ()
    (+
-    ;; float64 _score_percentage
+    ;; int64 _score
     8
     ))
   (:serialize
    (&optional strm)
    (let ((s (if strm strm
               (make-string-output-stream (send self :serialization-length)))))
-     ;; float64 _score_percentage
-       (sys::poke _score_percentage (send s :buffer) (send s :count) :double) (incf (stream-count s) 8)
+     ;; int64 _score
+#+(or :alpha :irix6 :x86_64)
+       (progn (sys::poke _score (send s :buffer) (send s :count) :long) (incf (stream-count s) 8))
+#-(or :alpha :irix6 :x86_64)
+       (cond ((and (class _score) (= (length (_score . bv)) 2)) ;; bignum
+              (write-long (ash (elt (_score . bv) 0) 0) s)
+              (write-long (ash (elt (_score . bv) 1) -1) s))
+             ((and (class _score) (= (length (_score . bv)) 1)) ;; big1
+              (write-long (elt (_score . bv) 0) s)
+              (write-long (if (>= _score 0) 0 #xffffffff) s))
+             (t                                         ;; integer
+              (write-long _score s)(write-long (if (>= _score 0) 0 #xffffffff) s)))
      ;;
      (if (null strm) (get-output-stream-string s))))
   (:deserialize
    (buf &optional (ptr- 0))
-   ;; float64 _score_percentage
-     (setq _score_percentage (sys::peek buf ptr- :double)) (incf ptr- 8)
+   ;; int64 _score
+#+(or :alpha :irix6 :x86_64)
+      (setf _score (prog1 (sys::peek buf ptr- :long) (incf ptr- 8)))
+#-(or :alpha :irix6 :x86_64)
+      (setf _score (let ((b0 (prog1 (sys::peek buf ptr- :integer) (incf ptr- 4)))
+                  (b1 (prog1 (sys::peek buf ptr- :integer) (incf ptr- 4))))
+              (cond ((= b1 -1) b0)
+                     ((and (= b1  0)
+                           (<= lisp::most-negative-fixnum b0 lisp::most-positive-fixnum))
+                      b0)
+                    ((= b1  0) (make-instance bignum :size 1 :bv (integer-vector b0)))
+                    (t (make-instance bignum :size 2 :bv (integer-vector b0 (ash b1 1)))))))
    ;;
    self)
   )
@@ -96,7 +116,7 @@
   :super ros::object
   :slots ())
 
-(setf (get game_control::GetUserScore :md5sum-) "e10e2705e269839872c95ff0a89588d4")
+(setf (get game_control::GetUserScore :md5sum-) "6dbf2818ed2a67e5ff5a9a7493308436")
 (setf (get game_control::GetUserScore :datatype-) "game_control/GetUserScore")
 (setf (get game_control::GetUserScore :request) game_control::GetUserScoreRequest)
 (setf (get game_control::GetUserScore :response) game_control::GetUserScoreResponse)
@@ -104,26 +124,26 @@
 (defmethod game_control::GetUserScoreRequest
   (:response () (instance game_control::GetUserScoreResponse :init)))
 
-(setf (get game_control::GetUserScoreRequest :md5sum-) "e10e2705e269839872c95ff0a89588d4")
+(setf (get game_control::GetUserScoreRequest :md5sum-) "6dbf2818ed2a67e5ff5a9a7493308436")
 (setf (get game_control::GetUserScoreRequest :datatype-) "game_control/GetUserScoreRequest")
 (setf (get game_control::GetUserScoreRequest :definition-)
       "string user_name
 ---
-float64 score_percentage
+int64 score
 
 ")
 
-(setf (get game_control::GetUserScoreResponse :md5sum-) "e10e2705e269839872c95ff0a89588d4")
+(setf (get game_control::GetUserScoreResponse :md5sum-) "6dbf2818ed2a67e5ff5a9a7493308436")
 (setf (get game_control::GetUserScoreResponse :datatype-) "game_control/GetUserScoreResponse")
 (setf (get game_control::GetUserScoreResponse :definition-)
       "string user_name
 ---
-float64 score_percentage
+int64 score
 
 ")
 
 
 
-(provide :game_control/GetUserScore "e10e2705e269839872c95ff0a89588d4")
+(provide :game_control/GetUserScore "6dbf2818ed2a67e5ff5a9a7493308436")
 
 
