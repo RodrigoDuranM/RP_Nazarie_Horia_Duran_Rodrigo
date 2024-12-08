@@ -53,10 +53,10 @@ add_message_files(
 )
 
 ## Generate services in the 'srv' folder
-# add_service_files(
-#   FILES
-#   GetUserScore.srv
-#   SetGameDifficulty.srv
+add_service_files(
+   FILES
+   GetUserScore.srv
+   SetGameDifficulty.srv
 # )
 
 ## Generate actions in the 'action' folder
