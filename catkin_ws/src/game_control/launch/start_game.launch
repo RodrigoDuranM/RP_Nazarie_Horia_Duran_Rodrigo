@@ -14,6 +14,9 @@
     <!-- Launch the control_node to handle keyboard input -->
     <node name="control_node" pkg="game_control" type="control_node.py" output="screen" />
 
+    <!-- Launch the control_node_pygame to handle pygame input -->
+    <node name="control_node_pygame" pkg="game_control" type="control_node_pygame.py" output="screen" />
+
     <!-- Launch the result_node to display the final score -->
     <node name="result_node" pkg="game_control" type="result_node.py" output="screen" />
 </launch>
