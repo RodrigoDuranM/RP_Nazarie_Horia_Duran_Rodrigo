@@ -69,10 +69,13 @@ class GameNode:
             # Adjust game difficulty here (this is a simple example, you can expand it)
             if req.change_difficulty == "easy":
                 self.level = 1
+                rospy.set_param('change_player_color', 1)  # Set color to red for easy
             elif req.change_difficulty == "medium":
                 self.level = 2
+                rospy.set_param('change_player_color', 2)  # Set color to purple for medium
             elif req.change_difficulty == "hard":
                 self.level = 3
+                rospy.set_param('change_player_color', 3)  # Set color to blue for hard
             return SetGameDifficultyResponse(True)  # Success in phase 1
         else:
             rospy.logwarn("Cannot change difficulty. Not in 'welcome' phase.")
@@ -82,11 +85,15 @@ class GameNode:
         self.user_name = msg.name
         self.user_username = msg.username
         self.user_age = msg.age
+        rospy.set_param('user_name', self.user_name)  # Set user name parameter
+        rospy.set_param('screen_param', 'phase1')    # Set the initial phase to 'phase1'
+        rospy.set_param('change_player_color', 1)     # Set player color to red (1: red, 2: purple, etc.)
         rospy.loginfo(f"User Info: Name - {self.user_name}, Username - {self.user_username}, Age - {self.user_age}")
 
     def keyboard_callback(self, msg):
         if msg.data == "START" and self.game_state == "welcome":
             self.game_state = "playing"  # Transition to playing phase
+            rospy.set_param('screen_param', 'playing')  # Update phase to playing
             self.reset_ball()
             rospy.loginfo("Game started!")
         elif msg.data == "LEFT" and self.game_state == "playing":
@@ -120,12 +127,29 @@ class GameNode:
         self.draw_text("Press 'START' to begin the game", (255, 255, 255), self.WIDTH // 2, self.HEIGHT // 2 + 50)
 
     def game_phase(self):
+        # Retrieve the current screen phase and player color
+        current_phase = rospy.get_param('screen_param', 'phase1')  # Default to 'phase1' if not set
+        player_color = rospy.get_param('change_player_color', 1)   # Default to 1 (red) if not set
+
+        # Map the integer value to actual colors
+        if player_color == 1:
+            player_color_rgb = (255, 0, 0)  # Red
+        elif player_color == 2:
+            player_color_rgb = (128, 0, 128)  # Purple
+        elif player_color == 3:
+            player_color_rgb = (0, 0, 255)  # Blue
+        else:
+            player_color_rgb = (255, 255, 255)  # Default to white if invalid value (optional)
+
+        rospy.loginfo(f"Current Phase: {current_phase}, Player Color: {player_color_rgb}")
+
         self.screen.fill((0, 0, 0))
         self.draw_text(f"Score: {self.score}", (255, 255, 255), 70, 20)
         self.draw_text(f"Lives: {self.lives}", (255, 255, 255), self.WIDTH - 70, 20)
         self.draw_text(f"Level: {self.level}", (255, 255, 255), self.WIDTH // 2, 20)
 
-        pygame.draw.rect(self.screen, (128, 0, 128), self.player)
+        # Use the player color here
+        pygame.draw.rect(self.screen, player_color_rgb, self.player)  # Draw player paddle with selected color
         pygame.draw.ellipse(self.screen, (255, 255, 255), self.ball)
         for brick in self.bricks:
             pygame.draw.rect(self.screen, (255, 0, 0), brick)
