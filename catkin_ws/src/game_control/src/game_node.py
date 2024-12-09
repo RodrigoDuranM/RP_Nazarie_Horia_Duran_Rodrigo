@@ -54,8 +54,8 @@ class GameNode:
         self.srv_get_user_score = rospy.Service('/game_node/user_score', GetUserScore, self.handle_get_user_score)
         self.srv_set_game_difficulty = rospy.Service('/game_node/difficulty', SetGameDifficulty, self.handle_set_game_difficulty)
 
-        # Initialize Parameters
-        self.user_name = rospy.get_param('user_name', 'Player')  # Get the player's name, default to 'Player'
+        # Initialize Parameters (with a fallback to 'Player')
+        self.user_name = rospy.get_param('user_name', 'Player')  # Default to 'Player'
         self.screen_param = rospy.get_param('screen_param', 'phase1')  # Default to 'phase1'
         self.change_player_color = rospy.get_param('change_player_color', 1)  # Default to red (1)
 
@@ -97,6 +97,7 @@ class GameNode:
         # Update the 'user_name' parameter when receiving user info
         rospy.set_param('user_name', msg.name)  # Set the parameter when the name is received
         self.user_name = rospy.get_param('user_name')  # Update user_name from the parameter
+
         rospy.loginfo(f"User Info: Name - {self.user_name}, Username - {msg.username}, Age - {msg.age}")
         self.update_score(self.user_name, self.score)  # Update score for the player
 
