@@ -94,12 +94,8 @@ class GameNode:
 
     def user_info_callback(self, msg):
         """Callback to handle user information and set parameters."""
-        # Update the 'user_name' parameter when receiving user info
-        rospy.set_param('user_name', msg.name)  # Set the parameter when the name is received
-        self.user_name = rospy.get_param('user_name')  # Update user_name from the parameter
-
-        rospy.loginfo(f"User Info: Name - {self.user_name}, Username - {msg.username}, Age - {msg.age}")
-        self.update_score(self.user_name, self.score)  # Update score for the player
+        rospy.loginfo(f"User Info Received: Name - {msg.name}, Username - {msg.username}, Age - {msg.age}")
+        self.user_name = msg.name  # Update user_name locally when received
 
     def keyboard_callback(self, msg):
         """Callback to handle keyboard inputs for movement and game control."""
@@ -221,6 +217,8 @@ class GameNode:
 
     def welcome_phase(self):
         """Welcome phase logic."""
+        # Ensure that the user_name parameter is updated in the welcome phase
+        rospy.set_param('user_name', self.user_name)
         self.screen.fill((0, 0, 0))
         self.draw_text(f"Welcome {self.user_name}!", (255, 255, 255), self.WIDTH // 2, self.HEIGHT // 2 - 50)
         self.draw_text("Press 'START' to begin the game", (255, 255, 255), self.WIDTH // 2, self.HEIGHT // 2 + 50)
