@@ -194,23 +194,41 @@ class GameNode:
     def final_phase(self):
         self.screen.fill((0, 0, 0))
         self.draw_text(f"Game Over! Final Score: {self.score}", (255, 255, 255), self.WIDTH // 2, self.HEIGHT // 2)
-        self.result_pub.publish(self.score)
-        self.score_sent = True
+        self.draw_text("Press SPACE to Restart", (255, 255, 255), self.WIDTH // 2, self.HEIGHT // 2 + 50)
+        
+        # Publish the score only once
+        if not self.score_sent:
+            self.result_pub.publish(self.score)
+            self.score_sent = True
 
-        # Reset game state for restart
+        # Check for keyboard input to restart
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_SPACE]:  # Press SPACE to restart
-            self.game_state = "welcome"
+        if keys[pygame.K_SPACE]:
+            # Reset all game state variables
             self.score = 0
             self.lives = 3
             self.level = 1
+            self.game_state = "welcome"
+            
+            # Reset ball and player position
+            self.player.x = self.WIDTH // 2 - self.PLAYER_WIDTH // 2
+            self.player.y = self.HEIGHT - 40
             self.reset_ball()
+            
+            # Recreate bricks
             self.bricks = []
             for row in range(5):
                 for col in range(self.WIDTH // self.BRICK_WIDTH):
                     brick = pygame.Rect(col * self.BRICK_WIDTH, row * self.BRICK_HEIGHT + 50, self.BRICK_WIDTH - 2, self.BRICK_HEIGHT - 2)
                     self.bricks.append(brick)
-            rospy.set_param('screen_param', 'phase1')  # Reset screen phase
+            
+            # Reset ROS parameters
+            rospy.set_param('screen_param', 'phase1')
+            rospy.set_param('change_player_color', 1)  # Reset to default color
+            
+            # Reset score sent flag
+            self.score_sent = False
+            
             rospy.loginfo("Game restarted and returned to welcome phase.")
 
     def game_loop(self):
