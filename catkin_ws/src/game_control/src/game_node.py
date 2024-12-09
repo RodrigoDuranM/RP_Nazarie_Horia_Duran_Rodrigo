@@ -154,11 +154,23 @@ class GameNode:
         # Re-fetch the parameter to ensure we are using the updated value
         self.user_name = rospy.get_param('game_node/user_name', 'Player')
         
-        # Get player color from parameter
-        player_color = {1: (255, 0, 0), 2: (128, 0, 128), 3: (0, 0, 255)}.get(self.change_player_color, (255, 255, 255))
+        # Fetch the player color dynamically on every update (so it updates when the parameter changes)
+        player_color_value = rospy.get_param('game_node/change_player_color', 1)  # Default to red (1)
+
+        # Map the integer value to actual colors
+        if player_color_value == 1:
+            player_color_rgb = (255, 0, 0)  # Red
+        elif player_color_value == 2:
+            player_color_rgb = (128, 0, 128)  # Purple
+        elif player_color_value == 3:
+            player_color_rgb = (0, 0, 255)  # Blue
+        else:
+            player_color_rgb = (255, 255, 255)  # Default to white if invalid value
+
+        # Set the player color to the updated value
         self.screen.fill((0, 0, 0))
 
-        pygame.draw.rect(self.screen, player_color, self.player)
+        pygame.draw.rect(self.screen, player_color_rgb, self.player)  # Draw player paddle with selected color
         pygame.draw.ellipse(self.screen, (255, 255, 255), self.ball)
 
         for brick in self.bricks:
