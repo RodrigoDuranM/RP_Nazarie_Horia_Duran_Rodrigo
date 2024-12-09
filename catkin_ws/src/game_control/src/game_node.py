@@ -66,10 +66,8 @@ class GameNode:
     def handle_get_user_score(self, req):
         """Handles the service to get the user's score."""
         user_name = req.user_name
-        if user_name in self.scores:
-            score = self.scores[user_name]  # Return the score for the requested user
-        else:
-            score = 0  # Default score if the player doesn't exist
+        # Retrieve the score for the user from the scores dictionary
+        score = self.scores.get(user_name, 0)  # Default score if the player doesn't exist
         return GetUserScoreResponse(score)
 
     def handle_set_game_difficulty(self, req):
@@ -99,6 +97,10 @@ class GameNode:
         rospy.set_param('game_node/user_name', msg.name)  # Set the parameter when the name is received
         self.user_name = rospy.get_param('game_node/user_name')  # Re-fetch updated parameter
         rospy.loginfo(f"User Info: Name - {self.user_name}, Username - {msg.username}, Age - {msg.age}")
+
+        # Initialize the user's score if it doesn't exist
+        if self.user_name not in self.scores:
+            self.scores[self.user_name] = self.score  # Set initial score for the player
         self.update_score(self.user_name, self.score)  # Update score for the player
 
     def keyboard_callback(self, msg):
