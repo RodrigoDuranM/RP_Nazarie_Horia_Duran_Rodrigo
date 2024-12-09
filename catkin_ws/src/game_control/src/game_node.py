@@ -86,8 +86,8 @@ class GameNode:
         self.user_username = msg.username
         self.user_age = msg.age
         rospy.set_param('user_name', self.user_name)  # Set user name parameter
-        rospy.set_param('screen_param', 'phase1')    # Set the initial phase to 'phase1'
-        rospy.set_param('change_player_color', 1)     # Set player color to red (1: red, 2: purple, etc.)
+        rospy.set_param('screen_param', 'phase1')
+        rospy.set_param('change_player_color', 1)     
         rospy.loginfo(f"User Info: Name - {self.user_name}, Username - {self.user_username}, Age - {self.user_age}")
 
     def keyboard_callback(self, msg):
