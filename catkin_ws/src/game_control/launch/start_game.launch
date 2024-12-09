@@ -1,16 +1,34 @@
 <launch>
-    <node name="info_user" pkg="game_control" type="info_user.py" output="screen">
-    </node>
+    <!-- INFO_USER Node -->
+    <group>
+        <node name="info_user" pkg="game_control" type="info_user.py" output="screen">
+        </node>
+    </group>
 
-    <node name="game_node" pkg="game_control" type="game_node.py" output="screen">
-        <param name="user_name" value="Rodrigo" />
-        <param name="screen_param" value="phase1" />
-        <param name="change_player_color" value="1" />
-    </node>
+    <!-- GAME_NODE Node in a new terminal -->
+    <group>
+        <node name="game_node" pkg="game_control" type="game_node.py" output="screen" launch-prefix="xterm -e">
+            <param name="user_name" value="Rodrigo" />
+            <param name="screen_param" value="phase1" />
+            <param name="change_player_color" value="1" />
+        </node>
+    </group>
 
-    <node name="control_node" pkg="game_control" type="control_node.py" output="screen" />
+    <!-- CONTROL_NODE in a new terminal -->
+    <group>
+        <node name="control_node" pkg="game_control" type="control_node.py" output="screen" launch-prefix="xterm -e">
+        </node>
+    </group>
 
-    <node name="control_node_pygame" pkg="game_control" type="control_node_pygame.py" output="screen" />
+    <!-- CONTROL_NODE_PYGAME in a new terminal -->
+    <group>
+        <node name="control_node_pygame" pkg="game_control" type="control_node_pygame.py" output="screen" launch-prefix="xterm -e">
+        </node>
+    </group>
 
-    <node name="result_node" pkg="game_control" type="result_node.py" output="screen" />
+    <!-- RESULT_NODE in a new terminal -->
+    <group>
+        <node name="result_node" pkg="game_control" type="result_node.py" output="screen" launch-prefix="xterm -e">
+        </node>
+    </group>
 </launch>
