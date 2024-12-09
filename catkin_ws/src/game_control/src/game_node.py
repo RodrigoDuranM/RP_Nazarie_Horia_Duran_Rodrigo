@@ -109,7 +109,7 @@ class GameNode:
         """Callback to handle keyboard inputs for movement and game control."""
         if msg.data == "START" and self.game_state == "welcome":
             self.game_state = "playing"
-            rospy.set_param('game_node/screen_param', 'playing')  # Update phase to playing
+            rospy.set_param('game_node/screen_param', 'phase2')  # Update phase to playing
             self.reset_ball()
             rospy.loginfo("Game started!")
         elif msg.data == "LEFT" and self.game_state == "playing":
@@ -212,6 +212,7 @@ class GameNode:
 
     def final_phase(self):
         """Final phase of the game, after the game is over."""
+        rospy.set_param('game_node/screen_param', 'phase3')  # Update phase to game over
         self.screen.fill((0, 0, 0))
         self.draw_text(f"Game Over! Score: {self.score}", (255, 255, 255), self.WIDTH // 2, self.HEIGHT // 2)
 
