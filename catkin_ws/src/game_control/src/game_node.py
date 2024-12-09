@@ -25,11 +25,12 @@ class GameNode:
         self.PLAYER_SPEED = 5
 
         # Game state variables
-        self.game_state = "welcome"
+        self.game_state = "welcome"  # States: welcome, playing, game_over
         self.score = 0
         self.lives = 3
         self.level = 1
-        self.score_sent = False
+        self.score_sent = False  # Flag to track if score has been sent
+        self.bricks = []  # Initialize bricks as an empty list
 
         # Initialize game objects
         self.screen = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
@@ -37,7 +38,6 @@ class GameNode:
         self.player = pygame.Rect(self.WIDTH // 2 - self.PLAYER_WIDTH // 2, self.HEIGHT - 40, self.PLAYER_WIDTH, self.PLAYER_HEIGHT)
         self.ball = pygame.Rect(self.WIDTH // 2 - self.BALL_SIZE // 2, self.HEIGHT // 2 - self.BALL_SIZE // 2, self.BALL_SIZE, self.BALL_SIZE)
         self.reset_ball()
-        self.bricks = self.generate_bricks()
 
         # Game loop
         self.clock = pygame.time.Clock()
@@ -52,7 +52,7 @@ class GameNode:
         self.srv_set_game_difficulty = rospy.Service('difficulty', SetGameDifficulty, self.handle_set_game_difficulty)
 
         # Load initial parameters
-        self.user_name = rospy.get_param('user_name', 'Rodrigo')
+        self.user_name = rospy.get_param('user_name', 'Player')
         self.screen_param = rospy.get_param('screen_param', 'phase1')
         self.change_player_color = rospy.get_param('change_player_color', 1)
 
@@ -86,6 +86,7 @@ class GameNode:
         if msg.data == "START" and self.game_state == "welcome":
             self.game_state = "playing"
             rospy.set_param('screen_param', 'playing')
+            self.reset_ball()
             rospy.loginfo("Game started!")
         elif msg.data == "LEFT" and self.game_state == "playing":
             self.move_left()
@@ -177,6 +178,11 @@ class GameNode:
         text_surface = font.render(text, True, color)
         text_rect = text_surface.get_rect(center=(x, y))
         self.screen.blit(text_surface, text_rect)
+
+    def welcome_phase(self):
+        self.screen.fill((0, 0, 0))
+        self.draw_text(f"Welcome {self.user_name}!", (255, 255, 255), self.WIDTH // 2, self.HEIGHT // 2 - 50)
+        self.draw_text("Press 'START' to begin the game", (255, 255, 255), self.WIDTH // 2, self.HEIGHT // 2 + 50)
 
     def game_loop(self):
         while not rospy.is_shutdown():
