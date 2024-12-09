@@ -1,5 +1,6 @@
 <launch>
     <node name="info_user" pkg="game_control" type="info_user.py" output="screen">
+    </node>
 
     <node name="game_node" pkg="game_control" type="game_node.py" output="screen">
         <param name="user_name" value="Rodrigo" />
