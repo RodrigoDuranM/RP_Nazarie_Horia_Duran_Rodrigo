@@ -12,13 +12,13 @@ class ResultNode:
         rospy.Subscriber('user_information', user_msg, self.user_info_callback)
         rospy.loginfo("Result node ready to receive final scores and user information.")
         
-        # Wait for services to be available
-        rospy.wait_for_service('user_score')
-        rospy.wait_for_service('difficulty')
+        # Wait for services to be available, with full scoped names
+        rospy.wait_for_service('/game_node/user_score')  # Scoped service name
+        rospy.wait_for_service('/game_node/difficulty')  # Scoped service name
 
-        # Create service proxies
-        self.get_user_score = rospy.ServiceProxy('user_score', GetUserScore)
-        self.set_game_difficulty = rospy.ServiceProxy('difficulty', SetGameDifficulty)
+        # Create service proxies with scoped names
+        self.get_user_score = rospy.ServiceProxy('/game_node/user_score', GetUserScore)  # Scoped service
+        self.set_game_difficulty = rospy.ServiceProxy('/game_node/difficulty', SetGameDifficulty)  # Scoped service
 
     def callback(self, data):
         rospy.loginfo(f"Final Score: {data.data}")
@@ -26,14 +26,14 @@ class ResultNode:
     def user_info_callback(self, data):
         rospy.loginfo(f"User Information - Name: {data.name}, Username: {data.username}, Age: {data.age}")
         
-        # Request the user score from the game_node
+        # Request the user score from the game_node using scoped service
         try:
-            score_response = self.get_user_score(data.name)  # Correctly send 'user_name'
+            score_response = self.get_user_score(data.name)  # Correct service call with scoped name
             rospy.loginfo(f"User {data.name}'s score: {score_response.score}")
         except rospy.ServiceException as e:
             rospy.logwarn(f"Service call failed: {e}")
         
-        # Request to set game difficulty
+        # Request to set game difficulty using scoped service
         try:
             difficulty_response = self.set_game_difficulty("medium")  # You can change this dynamically
             if difficulty_response.success:
