@@ -8,7 +8,7 @@
     <!-- GAME_NODE Node in a new terminal -->
     <group>
         <node name="game_node" pkg="game_control" type="game_node.py" output="screen" launch-prefix="xterm -e">
-            <param name="user_name" value="Player" />
+            <param name="user_name" value="Player" />  <!-- Default value -->
             <param name="screen_param" value="phase1" />
             <param name="change_player_color" value="1" />
         </node>

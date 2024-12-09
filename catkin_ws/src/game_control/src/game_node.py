@@ -55,9 +55,11 @@ class GameNode:
         self.srv_set_game_difficulty = rospy.Service('/game_node/difficulty', SetGameDifficulty, self.handle_set_game_difficulty)
 
         # Initialize Parameters (with a fallback to 'Player')
-        self.user_name = rospy.get_param('user_name', 'Player')  # Default to 'Player'
-        self.screen_param = rospy.get_param('screen_param', 'phase1')  # Default to 'phase1'
-        self.change_player_color = rospy.get_param('change_player_color', 1)  # Default to red (1)
+        self.screen_param = rospy.get_param('game_node/screen_param', 'phase1')  # Default to 'phase1'
+        self.change_player_color = rospy.get_param('game_node/change_player_color', 1)  # Default to red (1)
+
+        # Initialize user_name with default value, will be updated in the callback
+        self.user_name = rospy.get_param('game_node/user_name', 'Player')  # Default to 'Player'
 
         rospy.loginfo(f"Game initialized with user_name: {self.user_name}, screen_param: {self.screen_param}, change_player_color: {self.change_player_color}")
 
@@ -76,13 +78,13 @@ class GameNode:
             rospy.loginfo(f"Setting game difficulty to {req.change_difficulty}")
             if req.change_difficulty == "easy":
                 self.level = 1
-                rospy.set_param('change_player_color', 1)  # Set color to red for easy
+                rospy.set_param('game_node/change_player_color', 1)  # Set color to red for easy
             elif req.change_difficulty == "medium":
                 self.level = 2
-                rospy.set_param('change_player_color', 2)  # Set color to purple for medium
+                rospy.set_param('game_node/change_player_color', 2)  # Set color to purple for medium
             elif req.change_difficulty == "hard":
                 self.level = 3
-                rospy.set_param('change_player_color', 3)  # Set color to blue for hard
+                rospy.set_param('game_node/change_player_color', 3)  # Set color to blue for hard
             return SetGameDifficultyResponse(True)
         else:
             rospy.logwarn("Cannot change difficulty. Not in 'welcome' phase.")
@@ -94,14 +96,16 @@ class GameNode:
 
     def user_info_callback(self, msg):
         """Callback to handle user information and set parameters."""
-        rospy.loginfo(f"User Info Received: Name - {msg.name}, Username - {msg.username}, Age - {msg.age}")
-        self.user_name = msg.name  # Update user_name locally when received
+        rospy.set_param('game_node/user_name', msg.name)  # Set the parameter when the name is received
+        self.user_name = rospy.get_param('game_node/user_name')  # Re-fetch updated parameter
+        rospy.loginfo(f"User Info: Name - {self.user_name}, Username - {msg.username}, Age - {msg.age}")
+        self.update_score(self.user_name, self.score)  # Update score for the player
 
     def keyboard_callback(self, msg):
         """Callback to handle keyboard inputs for movement and game control."""
         if msg.data == "START" and self.game_state == "welcome":
             self.game_state = "playing"
-            rospy.set_param('screen_param', 'playing')  # Update phase to playing
+            rospy.set_param('game_node/screen_param', 'playing')  # Update phase to playing
             self.reset_ball()
             rospy.loginfo("Game started!")
         elif msg.data == "LEFT" and self.game_state == "playing":
@@ -143,6 +147,9 @@ class GameNode:
 
     def game_phase(self):
         """Game logic for the playing phase."""
+        # Re-fetch the parameter to ensure we are using the updated value
+        self.user_name = rospy.get_param('game_node/user_name', 'Player')
+        
         # Get player color from parameter
         player_color = {1: (255, 0, 0), 2: (128, 0, 128), 3: (0, 0, 255)}.get(self.change_player_color, (255, 255, 255))
         self.screen.fill((0, 0, 0))
@@ -205,7 +212,7 @@ class GameNode:
         self.level = 1
         self.bricks = self.generate_bricks()
         self.reset_ball()
-        rospy.set_param('screen_param', 'phase1')  # Reset screen phase
+        rospy.set_param('game_node/screen_param', 'phase1')  # Reset screen phase
         rospy.loginfo("Game restarted.")
 
     def draw_text(self, text, color, x, y):
@@ -217,8 +224,8 @@ class GameNode:
 
     def welcome_phase(self):
         """Welcome phase logic."""
-        # Ensure that the user_name parameter is updated in the welcome phase
-        rospy.set_param('user_name', self.user_name)
+        # Ensure the user_name parameter is updated in the welcome phase
+        self.user_name = rospy.get_param('game_node/user_name', 'Player')  # Fetch updated parameter
         self.screen.fill((0, 0, 0))
         self.draw_text(f"Welcome {self.user_name}!", (255, 255, 255), self.WIDTH // 2, self.HEIGHT // 2 - 50)
         self.draw_text("Press 'START' to begin the game", (255, 255, 255), self.WIDTH // 2, self.HEIGHT // 2 + 50)
