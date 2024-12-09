@@ -1,25 +1,15 @@
 <launch>
-    <!-- Launch the info_user node to collect user information -->
     <node name="info_user" pkg="game_control" type="info_user.py" output="screen">
-        <!-- Set parameters for the user info -->
-        <param name="screen_param" value="phase1" />
-        <param name="change_player_color" value="1" />
-        <param name="user_name" value="Rodrigo" /> <!-- Set the user_name parameter -->
-    </node>
 
-    <!-- Launch the game_node to run the game -->
     <node name="game_node" pkg="game_control" type="game_node.py" output="screen">
-        <!-- Set parameters for game phase and player color -->
+        <param name="user_name" value="Rodrigo" />
         <param name="screen_param" value="phase1" />
         <param name="change_player_color" value="1" />
     </node>
 
-    <!-- Launch the control_node to handle keyboard input -->
     <node name="control_node" pkg="game_control" type="control_node.py" output="screen" />
 
-    <!-- Launch the control_node_pygame to handle pygame input -->
     <node name="control_node_pygame" pkg="game_control" type="control_node_pygame.py" output="screen" />
 
-    <!-- Launch the result_node to display the final score -->
     <node name="result_node" pkg="game_control" type="result_node.py" output="screen" />
 </launch>
