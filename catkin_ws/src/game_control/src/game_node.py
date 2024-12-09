@@ -62,6 +62,7 @@ class GameNode:
         rospy.loginfo(f"Game initialized with user_name: {self.user_name}, screen_param: {self.screen_param}, change_player_color: {self.change_player_color}")
 
     def handle_get_user_score(self, req):
+        """Handles the service to get the user's score."""
         user_name = req.user_name
         if user_name in self.scores:
             score = self.scores[user_name]  # Return the score for the requested user
@@ -70,6 +71,7 @@ class GameNode:
         return GetUserScoreResponse(score)
 
     def handle_set_game_difficulty(self, req):
+        """Handles setting the game difficulty."""
         if self.game_state == "welcome":
             rospy.loginfo(f"Setting game difficulty to {req.change_difficulty}")
             if req.change_difficulty == "easy":
@@ -91,13 +93,15 @@ class GameNode:
         self.scores[user_name] = score
 
     def user_info_callback(self, msg):
-        # Set the 'user_name' parameter when receiving user info
-        rospy.set_param('user_name', msg.name)
+        """Callback to handle user information and set parameters."""
+        # Update the 'user_name' parameter when receiving user info
+        rospy.set_param('user_name', msg.name)  # Set the parameter when the name is received
         self.user_name = rospy.get_param('user_name')  # Update user_name from the parameter
         rospy.loginfo(f"User Info: Name - {self.user_name}, Username - {msg.username}, Age - {msg.age}")
         self.update_score(self.user_name, self.score)  # Update score for the player
 
     def keyboard_callback(self, msg):
+        """Callback to handle keyboard inputs for movement and game control."""
         if msg.data == "START" and self.game_state == "welcome":
             self.game_state = "playing"
             rospy.set_param('screen_param', 'playing')  # Update phase to playing
@@ -116,19 +120,23 @@ class GameNode:
                 rospy.signal_shutdown("User exited the game.")
 
     def move_left(self):
+        """Move the player paddle left."""
         if self.player.left > 0:
             self.player.x -= self.PLAYER_SPEED
 
     def move_right(self):
+        """Move the player paddle right."""
         if self.player.right < self.WIDTH:
             self.player.x += self.PLAYER_SPEED
 
     def reset_ball(self):
+        """Reset the ball to the center."""
         self.ball.center = (self.WIDTH // 2, self.HEIGHT // 2)
         self.ball_speed_x = random.choice([-3, 3])
         self.ball_speed_y = -3
 
     def generate_bricks(self):
+        """Generate bricks for the game."""
         bricks = []
         for row in range(5):
             for col in range(self.WIDTH // self.BRICK_WIDTH):
@@ -137,6 +145,7 @@ class GameNode:
         return bricks
 
     def game_phase(self):
+        """Game logic for the playing phase."""
         # Get player color from parameter
         player_color = {1: (255, 0, 0), 2: (128, 0, 128), 3: (0, 0, 255)}.get(self.change_player_color, (255, 255, 255))
         self.screen.fill((0, 0, 0))
@@ -181,6 +190,7 @@ class GameNode:
         self.draw_text(f"Score: {self.score}", (255, 255, 255), self.WIDTH // 2, 20)
 
     def final_phase(self):
+        """Final phase of the game, after the game is over."""
         self.screen.fill((0, 0, 0))
         self.draw_text(f"Game Over! Score: {self.score}", (255, 255, 255), self.WIDTH // 2, self.HEIGHT // 2)
 
@@ -191,6 +201,7 @@ class GameNode:
         self.draw_text("Press 'RESTART' to restart or 'EXIT' to exit.", (255, 255, 255), self.WIDTH // 2, self.HEIGHT // 2 + 50)
 
     def restart_game(self):
+        """Restart the game."""
         self.game_state = "welcome"
         self.score = 0
         self.lives = 3
@@ -201,17 +212,20 @@ class GameNode:
         rospy.loginfo("Game restarted.")
 
     def draw_text(self, text, color, x, y):
+        """Draw text on the screen."""
         font = pygame.font.Font(None, 36)
         text_surface = font.render(text, True, color)
         text_rect = text_surface.get_rect(center=(x, y))
         self.screen.blit(text_surface, text_rect)
 
     def welcome_phase(self):
+        """Welcome phase logic."""
         self.screen.fill((0, 0, 0))
         self.draw_text(f"Welcome {self.user_name}!", (255, 255, 255), self.WIDTH // 2, self.HEIGHT // 2 - 50)
         self.draw_text("Press 'START' to begin the game", (255, 255, 255), self.WIDTH // 2, self.HEIGHT // 2 + 50)
 
     def game_loop(self):
+        """Main game loop."""
         while not rospy.is_shutdown():
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
