@@ -25,6 +25,8 @@ class GameNode:
 
         # Game state variables
         self.game_state = "welcome"  # States: welcome, playing, game_over
+        self.scores = {}  # Dictionary to store scores by username
+        self.current_user = None  # Variable to store the current user
         self.score = 0
         self.lives = 3
         self.level = 1
@@ -33,10 +35,6 @@ class GameNode:
         self.ball_speed_x = None
         self.ball_speed_y = None
         self.bricks = []  # Initialize bricks as an empty list
-        self.user_name = ""
-        self.user_username = ""
-        self.user_age = ""
-        self.score_sent = False  # Flag to track if score has been sent
 
         # Initialize game objects
         self.screen = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
@@ -60,13 +58,16 @@ class GameNode:
     def handle_get_user_score(self, req):
         # Returning the actual score for the user
         rospy.loginfo(f"Returning score for user: {req.user_name}")
-        return GetUserScoreResponse(self.score)  # Use the actual score stored in the game logic
+        if req.user_name in self.scores:
+            return GetUserScoreResponse(self.scores[req.user_name])
+        else:
+            rospy.logwarn(f"No score found for user: {req.user_name}")
+            return GetUserScoreResponse(0)  # Return 0 if no score is found for the user
 
     def handle_set_game_difficulty(self, req):
         # Only allow changing the difficulty in the 'welcome' phase (phase 1)
         if self.game_state == "welcome":
             rospy.loginfo(f"Setting game difficulty to {req.change_difficulty}")
-            # Adjust game difficulty here (this is a simple example, you can expand it)
             if req.change_difficulty == "easy":
                 self.level = 1
                 rospy.set_param('change_player_color', 1)  # Set color to red for easy
@@ -82,9 +83,15 @@ class GameNode:
             return SetGameDifficultyResponse(False)  # Failure if not in phase 1
 
     def user_info_callback(self, msg):
-        rospy.set_param('user_name', 'Rodrigo')  # Set user name parameter
+        self.user_name = msg.name
+        self.user_username = msg.username
+        self.user_age = msg.age
+        rospy.set_param('user_name', self.user_name)  # Set user name parameter
         rospy.set_param('screen_param', 'phase1')    # Set the initial phase to 'phase1'
         rospy.set_param('change_player_color', 1)     # Set player color to red (1: red, 2: purple, etc.)
+        self.current_user = self.user_username  # Set the current user
+        if self.current_user not in self.scores:
+            self.scores[self.current_user] = 0  # Initialize the score for the new user
         rospy.loginfo(f"User Info: Name - {self.user_name}, Username - {self.user_username}, Age - {self.user_age}")
 
     def keyboard_callback(self, msg):
@@ -139,7 +146,7 @@ class GameNode:
             player_color_rgb = (255, 255, 255)  # Default to white if invalid value
 
         self.screen.fill((0, 0, 0))
-        self.draw_text(f"Score: {self.score}", (255, 255, 255), 70, 20)
+        self.draw_text(f"Score: {self.scores[self.current_user]}", (255, 255, 255), 70, 20)
         self.draw_text(f"Lives: {self.lives}", (255, 255, 255), self.WIDTH - 70, 20)
         self.draw_text(f"Level: {self.level}", (255, 255, 255), self.WIDTH // 2, 20)
 
@@ -164,7 +171,7 @@ class GameNode:
             if self.ball.colliderect(brick):
                 self.bricks.remove(brick)
                 self.ball_speed_y = -self.ball_speed_y
-                self.score += 10
+                self.scores[self.current_user] += 10  # Increment the score when hitting a brick
 
         if self.ball.bottom >= self.HEIGHT:
             self.lives -= 1
@@ -187,12 +194,11 @@ class GameNode:
 
     def final_phase(self):
         self.screen.fill((0, 0, 0))
-        self.draw_text(f"Game Over! Final Score: {self.score}", (255, 255, 255), self.WIDTH // 2, self.HEIGHT // 2)
-        self.result_pub.publish(self.score)
+        self.draw_text(f"Game Over! Final Score: {self.scores[self.current_user]}", (255, 255, 255), self.WIDTH // 2, self.HEIGHT // 2)
+        self.result_pub.publish(self.scores[self.current_user])
         self.score_sent = True
 
     def restart_game(self):
-        # Reset game variables
         self.game_state = "welcome"
         self.score = 0
         self.lives = 3
