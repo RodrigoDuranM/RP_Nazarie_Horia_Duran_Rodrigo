@@ -41,39 +41,12 @@
      source devel/setup.bash
      ```
 
-## Running the Nodes (in different terminals)
+## Running the Nodes (with the Launcher)
 
-1. **Collect User Information**:
-   - Run the `info_user.py` node to collect user information:
-     ```bash
-     rosrun game_control info_user.py
-     ```
+1. **Launch All Nodes**:  
+   Use the provided launch file to start all nodes together in separate terminals:
+   ```bash
+   roslaunch game_control start_game.launch
 
-2. **Start the Game**:
-   - Run the `game_node.py` to start the game:
-     ```bash
-     rosrun game_control game_node.py
-     ```
-
-3. **Control the Paddle**:
-   - For keyboard control, run:
-     ```bash
-     rosrun game_control control_node.py
-     ```
-   - For pygame control, run:
-     ```bash
-     rosrun game_control control_node_pygame.py
-     ```
-
-4. **Display Final Score**:
-   - Run the `result_node.py` to display the final score:
-     ```bash
-     rosrun game_control result_node.py
-     ```
-
-## Communication Between Nodes
-
-- These nodes communicate via ROS topics to manage:
-  - User input
-  - Game logic
-  - Displaying the final score
+2. **Test Parameters and Services**:
+   Use 'rosparam' and 'rosservice' methods to test the nodes.
