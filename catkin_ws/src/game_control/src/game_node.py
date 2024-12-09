@@ -45,21 +45,19 @@ class GameNode:
         # Game loop
         self.clock = pygame.time.Clock()
 
-        # ROS Publishers and Subscribers
+        # Topics
         self.result_pub = rospy.Publisher('result_information', Int64, queue_size=10)
         rospy.Subscriber('user_information', user_msg, self.user_info_callback)
         rospy.Subscriber('keyboard_control', String, self.keyboard_callback)
 
-        # Service handlers
+        # Services
         self.srv_get_user_score = rospy.Service('/game_node/user_score', GetUserScore, self.handle_get_user_score)
         self.srv_set_game_difficulty = rospy.Service('/game_node/difficulty', SetGameDifficulty, self.handle_set_game_difficulty)
 
-        # Initialize Parameters (with a fallback to 'Player')
-        self.screen_param = rospy.get_param('game_node/screen_param', 'phase1')  # Default to 'phase1'
-        self.change_player_color = rospy.get_param('game_node/change_player_color', 1)  # Default to red (1)
-
-        # Initialize user_name with default value, will be updated in the callback
-        self.user_name = rospy.get_param('game_node/user_name', 'Player')  # Default to 'Player'
+        # Parameters
+        self.screen_param = rospy.get_param('game_node/screen_param', 'phase1')  
+        self.change_player_color = rospy.get_param('game_node/change_player_color', 1)  
+        self.user_name = rospy.get_param('game_node/user_name', 'Player')  
 
         rospy.loginfo(f"Game initialized with user_name: {self.user_name}, screen_param: {self.screen_param}, change_player_color: {self.change_player_color}")
 
@@ -72,7 +70,6 @@ class GameNode:
         return GetUserScoreResponse(score)
 
     def handle_set_game_difficulty(self, req):
-        """Handles setting the game difficulty."""
         if self.game_state == "welcome":
             rospy.loginfo(f"Setting game difficulty to {req.change_difficulty}")
             if req.change_difficulty == "easy":

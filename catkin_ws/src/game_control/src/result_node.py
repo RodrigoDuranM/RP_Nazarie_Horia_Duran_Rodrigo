@@ -12,13 +12,13 @@ class ResultNode:
         rospy.Subscriber('user_information', user_msg, self.user_info_callback)
         rospy.loginfo("Result node ready to receive final scores and user information.")
         
-        # Wait for services to be available, with full scoped names
-        rospy.wait_for_service('/game_node/user_score')  # Scoped service name
-        rospy.wait_for_service('/game_node/difficulty')  # Scoped service name
+        # Wait for services to be available
+        rospy.wait_for_service('/game_node/user_score')  
+        rospy.wait_for_service('/game_node/difficulty')  
 
         # Create service proxies with scoped names
-        self.get_user_score = rospy.ServiceProxy('/game_node/user_score', GetUserScore)  # Scoped service
-        self.set_game_difficulty = rospy.ServiceProxy('/game_node/difficulty', SetGameDifficulty)  # Scoped service
+        self.get_user_score = rospy.ServiceProxy('/game_node/user_score', GetUserScore)  
+        self.set_game_difficulty = rospy.ServiceProxy('/game_node/difficulty', SetGameDifficulty)  
 
     def callback(self, data):
         rospy.loginfo(f"Final Score: {data.data}")
