@@ -121,6 +121,13 @@ class GameNode:
         text_rect.center = (x, y)
         self.screen.blit(text_surface, text_rect)
 
+    def create_bricks(self):
+        self.bricks = []
+        for row in range(5):
+            for col in range(self.WIDTH // self.BRICK_WIDTH):
+                brick = pygame.Rect(col * self.BRICK_WIDTH, row * self.BRICK_HEIGHT + 50, self.BRICK_WIDTH - 2, self.BRICK_HEIGHT - 2)
+                self.bricks.append(brick)
+
     def welcome_phase(self):
         self.screen.fill((0, 0, 0))
         self.draw_text(f"Welcome {self.user_name}!", (255, 255, 255), self.WIDTH // 2, self.HEIGHT // 2 - 50)
@@ -141,7 +148,6 @@ class GameNode:
         else:
             player_color_rgb = (255, 255, 255)  # Default to white if invalid value
 
-        rospy.loginfo(f"Current Phase: {current_phase}, Player Color: {player_color_rgb}")
 
         self.screen.fill((0, 0, 0))
         self.draw_text(f"Score: {self.score}", (255, 255, 255), 70, 20)
@@ -185,11 +191,7 @@ class GameNode:
             self.ball_speed_y *= 1.2
             self.PLAYER_SPEED += 1
             self.reset_ball()
-            self.bricks = []
-            for row in range(5):
-                for col in range(self.WIDTH // self.BRICK_WIDTH):
-                    brick = pygame.Rect(col * self.BRICK_WIDTH, row * self.BRICK_HEIGHT + 50, self.BRICK_WIDTH - 2, self.BRICK_HEIGHT - 2)
-                    self.bricks.append(brick)
+            self.create_bricks()
 
     def final_phase(self):
         self.screen.fill((0, 0, 0))
@@ -201,48 +203,44 @@ class GameNode:
             self.result_pub.publish(self.score)
             self.score_sent = True
 
-        # Check for keyboard input to restart
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_SPACE]:
-            # Reset all game state variables
-            self.score = 0
-            self.lives = 3
-            self.level = 1
-            self.game_state = "welcome"
-            
-            # Reset ball and player position
-            self.player.x = self.WIDTH // 2 - self.PLAYER_WIDTH // 2
-            self.player.y = self.HEIGHT - 40
-            self.reset_ball()
-            
-            # Recreate bricks
-            self.bricks = []
-            for row in range(5):
-                for col in range(self.WIDTH // self.BRICK_WIDTH):
-                    brick = pygame.Rect(col * self.BRICK_WIDTH, row * self.BRICK_HEIGHT + 50, self.BRICK_WIDTH - 2, self.BRICK_HEIGHT - 2)
-                    self.bricks.append(brick)
-            
-            # Reset ROS parameters
-            rospy.set_param('screen_param', 'phase1')
-            rospy.set_param('change_player_color', 1)  # Reset to default color
-            
-            # Reset score sent flag
-            self.score_sent = False
-            
-            rospy.loginfo("Game restarted and returned to welcome phase.")
-
     def game_loop(self):
         running = True
         while running:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
+                
+                # Add event-based restart logic
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                    if self.game_state == "game_over":
+                        # Reset all game state variables
+                        self.score = 0
+                        self.lives = 3
+                        self.level = 1
+                        self.game_state = "welcome"
+                        
+                        # Reset ball and player position
+                        self.player.x = self.WIDTH // 2 - self.PLAYER_WIDTH // 2
+                        self.player.y = self.HEIGHT - 40
+                        self.reset_ball()
+                        
+                        # Recreate bricks
+                        self.create_bricks()
+                        
+                        # Reset ROS parameters
+                        rospy.set_param('screen_param', 'phase1')
+                        rospy.set_param('change_player_color', 1)  # Reset to default color
+                        
+                        # Reset score sent flag
+                        self.score_sent = False
+                        
+                        rospy.loginfo("Game restarted and returned to welcome phase.")
 
             if self.game_state == "welcome":
                 self.welcome_phase()
             elif self.game_state == "playing":
                 self.game_phase()
-            elif self.game_state == "game_over" and not self.score_sent:
+            elif self.game_state == "game_over":
                 self.final_phase()
 
             pygame.display.flip()
