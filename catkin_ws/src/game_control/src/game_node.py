@@ -68,6 +68,7 @@ class GameNode:
         user_name = req.user_name
         # Retrieve the score for the user from the scores dictionary
         score = self.scores.get(user_name, 0)  # Default score if the player doesn't exist
+        rospy.loginfo(f"Fetching score for {user_name}: {score}")
         return GetUserScoreResponse(score)
 
     def handle_set_game_difficulty(self, req):
@@ -91,6 +92,7 @@ class GameNode:
     def update_score(self, user_name, score):
         """Update the score for a specific user."""
         self.scores[user_name] = score
+        rospy.loginfo(f"Updated score for {user_name}: {score}")
 
     def user_info_callback(self, msg):
         """Callback to handle user information and set parameters."""
@@ -178,6 +180,7 @@ class GameNode:
                 self.bricks.remove(brick)
                 self.ball_speed_y = -self.ball_speed_y
                 self.score += 10
+                self.update_score(self.user_name, self.score)  # Ensure score is updated in the dictionary
 
         if self.ball.bottom >= self.HEIGHT:
             self.lives -= 1
