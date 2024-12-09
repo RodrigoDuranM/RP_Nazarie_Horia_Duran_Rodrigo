@@ -34,6 +34,8 @@ class ControlNodePygame:
                 self.pub.publish("START")
             elif keys[pygame.K_r]:
                 self.pub.publish("RESTART")
+            elif keys[pygame.K_q]:
+                self.pub.publish("EXIT")
 
         pygame.quit()
 

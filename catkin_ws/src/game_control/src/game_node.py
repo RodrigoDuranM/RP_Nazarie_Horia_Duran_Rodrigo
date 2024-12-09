@@ -83,6 +83,7 @@ class GameNode:
         rospy.loginfo(f"User Info: Name - {self.user_name}, Username - {msg.username}, Age - {msg.age}")
 
     def keyboard_callback(self, msg):
+        # Handle game start and movement
         if msg.data == "START" and self.game_state == "welcome":
             self.game_state = "playing"
             rospy.set_param('screen_param', 'playing')
@@ -92,6 +93,13 @@ class GameNode:
             self.move_left()
         elif msg.data == "RIGHT" and self.game_state == "playing":
             self.move_right()
+
+        # Handle restart or exit commands when the game is over
+        if self.game_state == "game_over":
+            if msg.data == "RESTART":  # Restart the game when "RESTART" message is received
+                self.restart_game()
+            elif msg.data == "EXIT":  # Exit the game when "EXIT" message is received
+                rospy.signal_shutdown("User exited the game.")
 
     def move_left(self):
         if self.player.left > 0:
@@ -170,23 +178,23 @@ class GameNode:
     def final_phase(self):
         self.screen.fill((0, 0, 0))
         self.draw_text(f"Game Over! Score: {self.score}", (255, 255, 255), self.WIDTH // 2, self.HEIGHT // 2)
+
         if not self.score_sent:
             self.result_pub.publish(self.score)
             self.score_sent = True
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_SPACE]:
-            self.restart_game()
-        elif keys[pygame.K_ESCAPE]:
-            rospy.signal_shutdown("User exited the game.")
+
+        # Draw instructions for the user
+        self.draw_text("Press 'RESTART' to restart or 'EXIT' to exit.", (255, 255, 255), self.WIDTH // 2, self.HEIGHT // 2 + 50)
 
     def restart_game(self):
-        self.game_state = "welcome"
+        self.game_state = "welcome"  # Set the game state to 'welcome' to start a new game
         self.score = 0
         self.lives = 3
         self.level = 1
         self.bricks = self.generate_bricks()
-        self.reset_ball()
-        rospy.set_param('screen_param', 'phase1')
+        self.reset_ball()  # Reset the ball position
+        rospy.set_param('screen_param', 'phase1')  # Ensure the phase is set to 'phase1'
+        rospy.loginfo("Game restarted.")
 
     def draw_text(self, text, color, x, y):
         font = pygame.font.Font(None, 36)
