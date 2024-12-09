@@ -44,6 +44,7 @@ class GameNode:
         self.player = pygame.Rect(self.WIDTH // 2 - self.PLAYER_WIDTH // 2, self.HEIGHT - 40, self.PLAYER_WIDTH, self.PLAYER_HEIGHT)
         self.ball = pygame.Rect(self.WIDTH // 2 - self.BALL_SIZE // 2, self.HEIGHT // 2 - self.BALL_SIZE // 2, self.BALL_SIZE, self.BALL_SIZE)
         self.reset_ball()
+        self.initialize_bricks()  # Initialize bricks at the start
 
         # Game loop
         self.clock = pygame.time.Clock()
@@ -108,13 +109,18 @@ class GameNode:
         self.level = 1
         self.bricks = []
         self.reset_ball()
+        self.initialize_bricks()
         self.score_sent = False
-        rospy.set_param('screen_param', 'phase1')  # Reset phase parameter to phase1
+        rospy.set_param('screen_param', 'phase1')
+        rospy.loginfo("Game reset to initial state.")
+
+    def initialize_bricks(self):
+        self.bricks = []
         for row in range(5):
             for col in range(self.WIDTH // self.BRICK_WIDTH):
                 brick = pygame.Rect(col * self.BRICK_WIDTH, row * self.BRICK_HEIGHT + 50, self.BRICK_WIDTH - 2, self.BRICK_HEIGHT - 2)
                 self.bricks.append(brick)
-        rospy.loginfo("Game reset to initial state.")
+        rospy.loginfo("Bricks initialized.")
 
     def move_left(self):
         if self.player.left > 0:
