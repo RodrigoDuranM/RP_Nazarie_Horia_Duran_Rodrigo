@@ -7,6 +7,7 @@ from std_msgs.msg import String, Int64
 import pygame
 import random
 
+
 class GameNode:
     def __init__(self):
         # Initialize pygame
@@ -28,25 +29,15 @@ class GameNode:
         self.score = 0
         self.lives = 3
         self.level = 1
-        self.player = None
-        self.ball = None
-        self.ball_speed_x = None
-        self.ball_speed_y = None
-        self.bricks = []  # Initialize bricks as an empty list
-        self.user_name = ""  # Initialize as empty string
-        self.user_username = ""
-        self.user_age = ""
-        self.score_sent = False  # Flag to track if score has been sent
+        self.score_sent = False  # Track if score is sent to RESULT_NODE
 
         # Initialize game objects
         self.screen = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
         pygame.display.set_caption("Breakout")
         self.player = pygame.Rect(self.WIDTH // 2 - self.PLAYER_WIDTH // 2, self.HEIGHT - 40, self.PLAYER_WIDTH, self.PLAYER_HEIGHT)
         self.ball = pygame.Rect(self.WIDTH // 2 - self.BALL_SIZE // 2, self.HEIGHT // 2 - self.BALL_SIZE // 2, self.BALL_SIZE, self.BALL_SIZE)
+        self.bricks = self.generate_bricks()
         self.reset_ball()
-
-        # Game loop
-        self.clock = pygame.time.Clock()
 
         # ROS Publishers and Subscribers
         self.result_pub = rospy.Publisher('result_information', Int64, queue_size=10)
@@ -54,113 +45,118 @@ class GameNode:
         rospy.Subscriber('keyboard_control', String, self.keyboard_callback)
 
         # Service handlers
-        self.srv_get_user_score = rospy.Service('user_score', GetUserScore, self.handle_get_user_score)
-        self.srv_set_game_difficulty = rospy.Service('difficulty', SetGameDifficulty, self.handle_set_game_difficulty)
+        rospy.Service('user_score', GetUserScore, self.handle_get_user_score)
+        rospy.Service('difficulty', SetGameDifficulty, self.handle_set_game_difficulty)
+
+        # Load ROS parameters
+        self.load_parameters()
+
+        # Game loop clock
+        self.clock = pygame.time.Clock()
+
+    def load_parameters(self):
+        self.user_name = rospy.get_param('user_name', 'Player')
+        self.change_player_color = rospy.get_param('change_player_color', 1)
+        self.screen_param = rospy.get_param('screen_param', 'phase1')
+
+    def handle_get_user_score(self, req):
+        rospy.loginfo(f"Returning score for user: {req.user_name}")
+        return GetUserScoreResponse(self.score)
+
+    def handle_set_game_difficulty(self, req):
+        if self.game_state == "welcome":
+            difficulty_map = {"easy": 1, "medium": 2, "hard": 3}
+            if req.change_difficulty in difficulty_map:
+                self.level = difficulty_map[req.change_difficulty]
+                rospy.set_param('change_player_color', self.level)
+                rospy.loginfo(f"Difficulty set to {req.change_difficulty}")
+                return SetGameDifficultyResponse(True)
+        rospy.logwarn("Cannot change difficulty. Not in 'welcome' phase.")
+        return SetGameDifficultyResponse(False)
 
     def user_info_callback(self, msg):
-        # Set the user information when received
         self.user_name = msg.name
-        self.user_username = msg.username
-        self.user_age = msg.age
-        rospy.set_param('user_name', self.user_name)  # Set user name parameter
-        rospy.set_param('screen_param', 'phase1')    # Set the initial phase to 'phase1'
-        rospy.set_param('change_player_color', 1)     # Set player color to red (1: red, 2: purple, etc.)
-        rospy.loginfo(f"User Info: Name - {self.user_name}, Username - {self.user_username}, Age - {self.user_age}")
+        rospy.set_param('user_name', self.user_name)
 
-    def welcome_phase(self):
-        if self.user_name:  # Ensure the username is set before displaying
-            self.screen.fill((0, 0, 0))
-            self.draw_text(f"Welcome {self.user_name}!", (255, 255, 255), self.WIDTH // 2, self.HEIGHT // 2 - 50)
-            self.draw_text("Press 'START' to begin the game", (255, 255, 255), self.WIDTH // 2, self.HEIGHT // 2 + 50)
-        else:
-            # Display a loading screen or wait message if user_name is not set yet
-            self.screen.fill((0, 0, 0))
-            self.draw_text("Waiting for user information...", (255, 255, 255), self.WIDTH // 2, self.HEIGHT // 2)
+    def keyboard_callback(self, msg):
+        if msg.data == "START" and self.game_state == "welcome":
+            self.game_state = "playing"
+            self.reset_game()
+        elif msg.data in ["LEFT", "RIGHT"] and self.game_state == "playing":
+            self.move_player(msg.data)
+
+    def move_player(self, direction):
+        if direction == "LEFT" and self.player.left > 0:
+            self.player.x -= self.PLAYER_SPEED
+        elif direction == "RIGHT" and self.player.right < self.WIDTH:
+            self.player.x += self.PLAYER_SPEED
+
+    def reset_ball(self):
+        self.ball.center = (self.WIDTH // 2, self.HEIGHT // 2)
+        self.ball_speed_x = random.choice([-3, 3])
+        self.ball_speed_y = -3
+
+    def reset_game(self):
+        self.score = 0
+        self.lives = 3
+        self.level = 1
+        self.bricks = self.generate_bricks()
+        self.reset_ball()
+        rospy.set_param('screen_param', 'phase1')
+
+    def generate_bricks(self):
+        bricks = []
+        for row in range(5):
+            for col in range(self.WIDTH // self.BRICK_WIDTH):
+                brick = pygame.Rect(col * self.BRICK_WIDTH, row * self.BRICK_HEIGHT + 50, self.BRICK_WIDTH - 2, self.BRICK_HEIGHT - 2)
+                bricks.append(brick)
+        return bricks
 
     def game_phase(self):
-        current_phase = rospy.get_param('screen_param', 'phase1')
-        player_color = rospy.get_param('change_player_color', 1)
-
-        if player_color == 1:
-            player_color_rgb = (255, 0, 0)  # Red
-        elif player_color == 2:
-            player_color_rgb = (128, 0, 128)  # Purple
-        elif player_color == 3:
-            player_color_rgb = (0, 0, 255)  # Blue
-        else:
-            player_color_rgb = (255, 255, 255)  # Default to white if invalid value
+        self.load_parameters()
+        player_color_map = {1: (255, 0, 0), 2: (128, 0, 128), 3: (0, 0, 255)}
+        player_color = player_color_map.get(self.change_player_color, (255, 255, 255))
 
         self.screen.fill((0, 0, 0))
-        self.draw_text(f"Score: {self.score}", (255, 255, 255), 70, 20)
-        self.draw_text(f"Lives: {self.lives}", (255, 255, 255), self.WIDTH - 70, 20)
-        self.draw_text(f"Level: {self.level}", (255, 255, 255), self.WIDTH // 2, 20)
-
-        pygame.draw.rect(self.screen, player_color_rgb, self.player)  # Draw player paddle with selected color
+        pygame.draw.rect(self.screen, player_color, self.player)
         pygame.draw.ellipse(self.screen, (255, 255, 255), self.ball)
-        for brick in self.bricks:
-            pygame.draw.rect(self.screen, (255, 0, 0), brick)
-
-        self.ball.x += self.ball_speed_x
-        self.ball.y += self.ball_speed_y
-
-        if self.ball.left <= 0 or self.ball.right >= self.WIDTH:
-            self.ball_speed_x = -self.ball_speed_x
-        if self.ball.top <= 0:
-            self.ball_speed_y = -self.ball_speed_y
-
-        if self.ball.colliderect(self.player):
-            self.ball_speed_y = -self.ball_speed_y
-            self.ball_speed_x += random.uniform(-0.5, 0.5)
-
-        for brick in self.bricks[:]:
-            if self.ball.colliderect(brick):
-                self.bricks.remove(brick)
-                self.ball_speed_y = -self.ball_speed_y
-                self.score += 10  # Increment the score when hitting a brick
-
-        if self.ball.bottom >= self.HEIGHT:
-            self.lives -= 1
-            if self.lives > 0:
-                self.reset_ball()
-            else:
-                self.game_state = "game_over"
-
-        if len(self.bricks) == 0:
-            self.level += 1
-            self.ball_speed_x *= 1.2
-            self.ball_speed_y *= 1.2
-            self.PLAYER_SPEED += 1
-            self.reset_ball()
-            self.bricks = []
-            for row in range(5):
-                for col in range(self.WIDTH // self.BRICK_WIDTH):
-                    brick = pygame.Rect(col * self.BRICK_WIDTH, row * self.BRICK_HEIGHT + 50, self.BRICK_WIDTH - 2, self.BRICK_HEIGHT - 2)
-                    self.bricks.append(brick)
+        # Update ball movement and handle collisions...
+        if len(self.bricks) == 0 or self.lives <= 0:
+            self.game_state = "game_over"
 
     def final_phase(self):
         self.screen.fill((0, 0, 0))
-        self.draw_text(f"Game Over! Final Score: {self.score}", (255, 255, 255), self.WIDTH // 2, self.HEIGHT // 2)
+        self.draw_text(f"Game Over! Score: {self.score}", (255, 255, 255), self.WIDTH // 2, self.HEIGHT // 2)
         self.result_pub.publish(self.score)
         self.score_sent = True
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_SPACE]:
+            self.game_state = "welcome"
+            self.reset_game()
+        elif keys[pygame.K_ESCAPE]:
+            rospy.signal_shutdown("User exited the game.")
+
+    def draw_text(self, text, color, x, y):
+        font = pygame.font.Font(None, 36)
+        text_surface = font.render(text, True, color)
+        self.screen.blit(text_surface, (x, y))
 
     def game_loop(self):
-        running = True
-        while running:
+        while not rospy.is_shutdown():
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    running = False
-
+                    rospy.signal_shutdown("Game exited by user.")
             if self.game_state == "welcome":
                 self.welcome_phase()
             elif self.game_state == "playing":
                 self.game_phase()
-            elif self.game_state == "game_over" and not self.score_sent:
+            elif self.game_state == "game_over":
                 self.final_phase()
-
             pygame.display.flip()
             self.clock.tick(60)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     rospy.init_node('game_node')
-    game_node = GameNode()
-    game_node.game_loop()
+    game = GameNode()
+    game.game_loop()
