@@ -82,10 +82,7 @@ class GameNode:
             return SetGameDifficultyResponse(False)  # Failure if not in phase 1
 
     def user_info_callback(self, msg):
-        self.user_name = msg.name
-        self.user_username = msg.username
-        self.user_age = msg.age
-        rospy.set_param('user_name', self.user_name)  # Set user name parameter
+        rospy.set_param('user_name', 'Rodrigo')  # Set user name parameter
         rospy.set_param('screen_param', 'phase1')    # Set the initial phase to 'phase1'
         rospy.set_param('change_player_color', 1)     # Set player color to red (1: red, 2: purple, etc.)
         rospy.loginfo(f"User Info: Name - {self.user_name}, Username - {self.user_username}, Age - {self.user_age}")
