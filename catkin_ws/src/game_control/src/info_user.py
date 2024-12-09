@@ -19,7 +19,7 @@ class InfoUser:
         rate = rospy.Rate(1)  # 1 Hz rate (one iteration per second)
         self.pub.publish(self.user)
         while not rospy.is_shutdown():
-            rate.sleep()  # Sleep for 1 second and check if there's a shutdown
+            rate.sleep()  # Sleep for 1 second and check if there's a shutdown. This is essentially a wait, to avoid errors.
 
     def run(self):
         self.collect_user_info()

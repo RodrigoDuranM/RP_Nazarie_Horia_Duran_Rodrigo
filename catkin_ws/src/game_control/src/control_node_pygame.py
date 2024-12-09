@@ -23,7 +23,8 @@ class ControlNodePygame:
                 if event.type == pygame.QUIT:
                     running = False
 
-            # Continuously check if the arrow keys are being held down. This allows for better movement of the board.
+            # Continuously check if the arrow keys are being held down. This allows for better movement of the board. 
+            # Still, the movement is not the best.
             keys = pygame.key.get_pressed()
 
             if keys[pygame.K_LEFT]:

@@ -16,7 +16,7 @@ class ResultNode:
         rospy.wait_for_service('/game_node/user_score')  
         rospy.wait_for_service('/game_node/difficulty')  
 
-        # Create service proxies with scoped names
+        # Create service proxies
         self.get_user_score = rospy.ServiceProxy('/game_node/user_score', GetUserScore)  
         self.set_game_difficulty = rospy.ServiceProxy('/game_node/difficulty', SetGameDifficulty)  
 
@@ -26,16 +26,16 @@ class ResultNode:
     def user_info_callback(self, data):
         rospy.loginfo(f"User Information - Name: {data.name}, Username: {data.username}, Age: {data.age}")
         
-        # Request the user score from the game_node using scoped service
+        # Request the user score from the game_node using service
         try:
-            score_response = self.get_user_score(data.name)  # Correct service call with scoped name
+            score_response = self.get_user_score(data.name)  # Correct service call 
             rospy.loginfo(f"User {data.name}'s score: {score_response.score}")
         except rospy.ServiceException as e:
             rospy.logwarn(f"Service call failed: {e}")
         
-        # Request to set game difficulty using scoped service
+        # Request to set game difficulty using service
         try:
-            difficulty_response = self.set_game_difficulty("medium")  # You can change this dynamically
+            difficulty_response = self.set_game_difficulty("medium") 
             if difficulty_response.success:
                 rospy.loginfo(f"Game difficulty set to medium successfully.")
             else:

@@ -94,7 +94,7 @@ class GameNode:
     def user_info_callback(self, msg):
         """Callback to handle user information and set parameters."""
         rospy.set_param('game_node/user_name', msg.name)  # Set the parameter when the name is received
-        self.user_name = rospy.get_param('game_node/user_name')  # Re-fetch updated parameter
+        self.user_name = rospy.get_param('game_node/user_name')  # Re-fetch updated parameter to ensure that the name is updated
         rospy.loginfo(f"User Info: Name - {self.user_name}, Username - {msg.username}, Age - {msg.age}")
 
         # Initialize the user's score if it doesn't exist
@@ -106,7 +106,7 @@ class GameNode:
         """Callback to handle keyboard inputs for movement and game control."""
         if msg.data == "START" and self.game_state == "welcome":
             self.game_state = "playing"
-            rospy.set_param('game_node/screen_param', 'phase2')  # Update phase to playing
+            rospy.set_param('game_node/screen_param', 'phase2')  # Update phase to phase2 (playing the game)
             self.reset_ball()
             rospy.loginfo("Game started!")
         elif msg.data == "LEFT" and self.game_state == "playing":
@@ -114,7 +114,7 @@ class GameNode:
         elif msg.data == "RIGHT" and self.game_state == "playing":
             self.move_right()
 
-        # Handle restart or exit commands when the game is over
+        # Handle restart or exit commands when the game is over. Restart will lead to phase 1 of the game.
         if self.game_state == "game_over":
             if msg.data == "RESTART":
                 self.restart_game()
@@ -209,7 +209,7 @@ class GameNode:
 
     def final_phase(self):
         """Final phase of the game, after the game is over."""
-        rospy.set_param('game_node/screen_param', 'phase3')  # Update phase to game over
+        rospy.set_param('game_node/screen_param', 'phase3')  # Update phase to phase3 (game over).
         self.screen.fill((0, 0, 0))
         self.draw_text(f"Game Over! Score: {self.score}", (255, 255, 255), self.WIDTH // 2, self.HEIGHT // 2)
 
@@ -227,7 +227,7 @@ class GameNode:
         self.level = 1
         self.bricks = self.generate_bricks()
         self.reset_ball()
-        rospy.set_param('game_node/screen_param', 'phase1')  # Reset screen phase
+        rospy.set_param('game_node/screen_param', 'phase1')  # Reset screen phase to phase1 (welcome)
         rospy.loginfo("Game restarted.")
 
     def draw_text(self, text, color, x, y):
@@ -240,7 +240,7 @@ class GameNode:
     def welcome_phase(self):
         """Welcome phase logic."""
         # Ensure the user_name parameter is updated in the welcome phase
-        self.user_name = rospy.get_param('game_node/user_name', 'Player')  # Fetch updated parameter
+        self.user_name = rospy.get_param('game_node/user_name', 'Player')  # Fetch updated parameter again
         self.screen.fill((0, 0, 0))
         self.draw_text(f"Welcome {self.user_name}!", (255, 255, 255), self.WIDTH // 2, self.HEIGHT // 2 - 50)
         self.draw_text("Press 'START' to begin the game", (255, 255, 255), self.WIDTH // 2, self.HEIGHT // 2 + 50)

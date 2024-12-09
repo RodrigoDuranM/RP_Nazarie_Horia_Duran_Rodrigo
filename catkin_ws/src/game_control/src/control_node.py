@@ -12,7 +12,7 @@ class ControlNode:
     def run(self):
         rospy.loginfo("Control node ready. Type LEFT, RIGHT, or START to control the game.")
         while not rospy.is_shutdown():
-            command = input("Enter command: ").strip().upper()
+            command = input("Enter command: ").strip().upper() # strip removes unwanted spaces, and upper uses upper case letters.
             if command in ["LEFT", "RIGHT", "START"]:
                 self.pub.publish(command)
             else:
